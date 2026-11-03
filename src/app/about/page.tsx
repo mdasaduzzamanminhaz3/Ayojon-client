@@ -9,6 +9,7 @@ import {
   Eye,
   Sparkles,
 } from "lucide-react";
+import MainLayout from "../main-layout";
 
 const features = [
   {
@@ -30,6 +31,7 @@ const features = [
 
 export default function AboutPage() {
   return (
+    <MainLayout>
     <main className="bg-white dark:bg-[#101b16]">
 
       {/* Hero */}
@@ -199,5 +201,6 @@ export default function AboutPage() {
       </section>
 
     </main>
+    </MainLayout>
   );
 }

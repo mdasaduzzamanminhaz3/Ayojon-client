@@ -4,18 +4,19 @@ import NewsletterSection from "@/components/Home/newsletter-section";
 import PastEventsGallery from "@/components/Home/past-events-gallery";
 import UpcomingEvents from "@/components/Home/upcoming-events";
 import WhyChooseAyojon from "@/components/Home/why-choose-ayojon";
+import MainLayout from "./main-layout";
 
 export default function Home() {
   return (
     <>
-      <main>
+      <MainLayout>
         <HeroSection />
         <UpcomingEvents />
         <EventCategories />
         <WhyChooseAyojon />
         <PastEventsGallery />
         <NewsletterSection/>
-      </main>
+      </MainLayout>
     </>
   );
 }
