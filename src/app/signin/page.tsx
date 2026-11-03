@@ -1,7 +1,7 @@
-
 "use client";
 
 import { useState } from "react";
+import type { FormEvent } from "react";
 import Link from "next/link";
 import {
   Mail,
@@ -11,27 +11,54 @@ import {
   ArrowRight,
   CalendarDays,
   HeartHandshake,
+  AlertCircle,
+  CheckCircle2,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
-
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setErrorMessage("");
+    setSuccessMessage("");
+    setLoading(true);
+
     const formData = new FormData(e.currentTarget);
-    const userData = Object.fromEntries(formData.entries());
-    const {data, error} = await authClient.signIn.email({
-        email: userData.email as string,
-         password: userData.password as string
-        });
-    if (error) {
-      console.error("Login error:", error);
-    } else {
-      console.log("Login successful:", data);
+
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    try {
+      const { data, error } = await authClient.signIn.email({
+        email,
+        password,
+      });
+
+      if (error) {
+        setErrorMessage(
+          error.message || "Invalid email or password. Please try again."
+        );
+        return;
+      }
+
+      setSuccessMessage("Login successful! Redirecting...");
+
       router.push("/");
+      router.refresh();
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrorMessage("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -75,7 +102,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           </p>
         </div>
 
-        {/* Right Side - Login Form */}
+        {/* Right Side */}
         <div className="flex items-center justify-center p-6 sm:p-10 lg:p-12">
           <div className="w-full max-w-md">
 
@@ -192,13 +219,36 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 </label>
               </div>
 
+              {/* Error Message */}
+              {errorMessage && (
+                <div
+                  role="alert"
+                  className="flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700 dark:border-red-900 dark:bg-red-950/30 dark:text-red-400"
+                >
+                  <AlertCircle size={18} className="mt-0.5 shrink-0" />
+                  <p>{errorMessage}</p>
+                </div>
+              )}
+
+              {/* Success Message */}
+              {successMessage && (
+                <div
+                  role="status"
+                  className="flex items-start gap-2 rounded-xl border border-green-200 bg-green-50 p-3 text-sm text-green-700 dark:border-green-900 dark:bg-green-950/30 dark:text-green-400"
+                >
+                  <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
+                  <p>{successMessage}</p>
+                </div>
+              )}
+
               {/* Submit */}
               <button
                 type="submit"
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 font-semibold text-white transition hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                disabled={loading}
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 font-semibold text-white transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-emerald-600 dark:hover:bg-emerald-500"
               >
-                Sign In
-                <ArrowRight size={18} />
+                {loading ? "Signing in..." : "Sign In"}
+                {!loading && <ArrowRight size={18} />}
               </button>
             </form>
 
