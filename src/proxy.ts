@@ -12,13 +12,13 @@ export async function proxy(request: NextRequest) {
     if(!user){
           return NextResponse.redirect(new URL('/signin', request.url))
     }
-  return NextResponse.redirect(new URL('/home', request.url))
+  return NextResponse.redirect(new URL('/', request.url))
 }
 
 // Alternatively, you can use a default export:
 // export default function proxy(request: NextRequest) { ... }
 
 export const config = {
-  matcher: ['/create-event','/manage-events','/manage-events/:path','/events/:path'],
+  matcher: ['/manage-events','/manage-events/:path','/events/:path'],
 }
 
