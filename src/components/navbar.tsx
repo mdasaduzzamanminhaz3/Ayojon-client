@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -12,23 +11,14 @@ import {
   Sun,
   Moon,
   Search,
-  ChevronDown,
-  CalendarDays,
-  HeartHandshake,
-  Users,
+
 } from "lucide-react";
 
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
-  { name: "Volunteer", href: "/volunteer" },
+  { name: "Events", href: "/events" },
   { name: "Contact", href: "/contact" },
-];
-
-const eventLinks = [
-  { name: "Explore Events", href: "/events", icon: CalendarDays },
-  { name: "Charity Events", href: "/events?category=charity", icon: HeartHandshake },
-  { name: "Social Events", href: "/events?category=social", icon: Users },
 ];
 
 export default function Navbar() {
@@ -36,15 +26,12 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme();
 
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [eventMenu, setEventMenu] = useState(false);
 
   const isActive = (href: string) => pathname === href;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-green-900/10 bg-[#FAFBF6]/95 text-[#172C20] backdrop-blur-xl dark:border-white/10 dark:bg-[#101B15]/95 dark:text-white">
-
       <nav className="mx-auto flex h-[76px] max-w-7xl items-center justify-between px-5 lg:px-8">
-
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#167344] text-white">
@@ -58,7 +45,6 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden items-center gap-7 lg:flex">
-
           {navLinks.slice(0, 1).map((link) => (
             <Link
               key={link.name}
@@ -70,41 +56,6 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-
-          {/* Events Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setEventMenu(!eventMenu)}
-              className="flex items-center gap-1 text-sm font-semibold transition-colors hover:text-[#23834F]"
-            >
-              Events
-              <ChevronDown
-                size={16}
-                className={`transition-transform ${eventMenu ? "rotate-180" : ""}`}
-              />
-            </button>
-
-            {eventMenu && (
-              <div className="absolute left-0 top-10 w-56 rounded-xl border border-green-900/10 bg-white p-2 shadow-xl dark:border-white/10 dark:bg-[#1B2A21]">
-
-                {eventLinks.map((item) => {
-                  const Icon = item.icon;
-
-                  return (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      onClick={() => setEventMenu(false)}
-                      className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors hover:bg-green-50 hover:text-[#23834F] dark:hover:bg-white/10"
-                    >
-                      <Icon size={17} />
-                      {item.name}
-                    </Link>
-                  );
-                })}
-              </div>
-            )}
-          </div>
 
           {navLinks.slice(1).map((link) => (
             <Link
@@ -121,7 +72,6 @@ export default function Navbar() {
 
         {/* Right Actions */}
         <div className="hidden items-center gap-3 lg:flex">
-
           {/* Search */}
           <Link
             href="/events"
@@ -137,11 +87,7 @@ export default function Navbar() {
             aria-label="Toggle theme"
             className="flex h-10 w-10 items-center justify-center rounded-full border border-green-900/10 transition-colors hover:bg-green-100 dark:border-white/10 dark:hover:bg-white/10"
           >
-            {theme === "dark" ? (
-              <Sun size={19} />
-            ) : (
-              <Moon size={19} />
-            )}
+            {theme === "dark" ? <Sun size={19} /> : <Moon size={19} />}
           </button>
 
           {/* Login */}
@@ -163,7 +109,6 @@ export default function Navbar() {
 
         {/* Mobile Actions */}
         <div className="flex items-center gap-2 lg:hidden">
-
           <button
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
             aria-label="Toggle theme"
@@ -186,9 +131,7 @@ export default function Navbar() {
       {/* Mobile Navigation */}
       {mobileMenu && (
         <div className="border-t border-green-900/10 bg-[#FAFBF6] px-5 py-5 dark:border-white/10 dark:bg-[#101B15] lg:hidden">
-
           <div className="flex flex-col gap-2">
-
             {navLinks.slice(0, 1).map((link) => (
               <Link
                 key={link.name}
@@ -200,34 +143,6 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <button
-              onClick={() => setEventMenu(!eventMenu)}
-              className="flex items-center justify-between rounded-lg px-4 py-3 text-left text-sm font-semibold hover:bg-green-100 dark:hover:bg-white/10"
-            >
-              Events
-              <ChevronDown
-                size={17}
-                className={`transition-transform ${eventMenu ? "rotate-180" : ""}`}
-              />
-            </button>
-
-            {eventMenu && (
-              <div className="ml-4 flex flex-col gap-1 border-l-2 border-green-200 pl-3 dark:border-green-800">
-                {eventLinks.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onClick={() => {
-                      setMobileMenu(false);
-                      setEventMenu(false);
-                    }}
-                    className="rounded-lg px-3 py-2.5 text-sm hover:bg-green-100 dark:hover:bg-white/10"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            )}
 
             {navLinks.slice(1).map((link) => (
               <Link

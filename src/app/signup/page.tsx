@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Router import kora holo manual redirect er jonno
 import {
   ArrowRight,
   CalendarDays,
@@ -13,10 +14,57 @@ import {
   Mail,
   UserRound,
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // Error state rakha holo
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setErrorMessage(null); // Age kono error thakle seta reset korbe
+    
+    const formData = new FormData(event.currentTarget);
+    const userData = Object.fromEntries(formData.entries());
+
+    // Password match validation
+    if (userData.password !== userData.confirmPassword) {
+      setErrorMessage("Passwords do not match!");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const { data, error } = await authClient.signUp.email({
+        email: userData.email as string,
+        password: userData.password as string,
+        name: userData.name as string,
+        image: userData.image as string,
+        callbackURL: "/",
+      });
+
+      if (error) {
+        // Ekhane Better Auth er error message-ti UI te show korbe (jemon: Email already exists)
+        setErrorMessage(error.message || "Something went wrong during signup.");
+        setLoading(false);
+        return;
+      }
+
+      console.log("Signup Success:", data);
+      
+      // Success hole manually redirect kore dibe
+      router.push("/");
+      
+    } catch (err ) {
+      setErrorMessage(err.message || "An unexpected error occurred.");
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f4f8f4] px-4 py-12 dark:bg-[#0d1510]">
@@ -92,7 +140,14 @@ export default function SignUpPage() {
                 </p>
               </div>
 
-              <form className="space-y-5">
+              {/* Error Message Alert Box */}
+              {errorMessage && (
+                <div className="mb-5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-600 dark:border-red-900/50 dark:bg-red-950/50 dark:text-red-400">
+                  {errorMessage}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Full Name */}
                 <div>
                   <label
@@ -289,13 +344,16 @@ export default function SignUpPage() {
                 {/* Submit */}
                 <button
                   type="submit"
-                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-800 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/10 transition hover:-translate-y-0.5 hover:bg-emerald-900 focus:outline-none focus:ring-4 focus:ring-emerald-600/20 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                  disabled={loading}
+                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-800 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/10 transition hover:-translate-y-0.5 hover:bg-emerald-900 focus:outline-none focus:ring-4 focus:ring-emerald-600/20 disabled:opacity-50 dark:bg-emerald-600 dark:hover:bg-emerald-500"
                 >
-                  Create Account
-                  <ArrowRight
-                    size={18}
-                    className="transition-transform group-hover:translate-x-1"
-                  />
+                  {loading ? "Creating account..." : "Create Account"}
+                  {!loading && (
+                    <ArrowRight
+                      size={18}
+                      className="transition-transform group-hover:translate-x-1"
+                    />
+                  )}
                 </button>
               </form>
 

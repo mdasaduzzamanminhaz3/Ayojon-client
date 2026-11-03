@@ -12,9 +12,28 @@ import {
   CalendarDays,
   HeartHandshake,
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const userData = Object.fromEntries(formData.entries());
+    const {data, error} = await authClient.signIn.email({
+        email: userData.email as string,
+         password: userData.password as string
+        });
+    if (error) {
+      console.error("Login error:", error);
+    } else {
+      console.log("Login successful:", data);
+      router.push("/");
+    }
+  };
 
   return (
     <main className="flex min-h-[85vh] items-center justify-center bg-[#f8faf8] px-5 py-12 dark:bg-[#101b16]">
@@ -84,7 +103,7 @@ export default function LoginPage() {
               </p>
             </div>
 
-            <form className="space-y-5">
+            <form className="space-y-5" onSubmit={handleSubmit}>
 
               {/* Email */}
               <div>
@@ -185,7 +204,7 @@ export default function LoginPage() {
 
             {/* Signup */}
             <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href="/signup"
                 className="font-bold text-emerald-700 hover:underline dark:text-emerald-400"
