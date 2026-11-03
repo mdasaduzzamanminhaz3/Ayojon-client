@@ -111,36 +111,6 @@ export default function EventsPage() {
   return (
     <MainLayout>
       <div className="min-h-screen bg-[#f8faf8] dark:bg-[#101813]">
-        {/* Hero Section */}
-        <section className="bg-emerald-950 px-5 py-16 text-white sm:py-20">
-          <div className="mx-auto max-w-7xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-white/10 px-4 py-2 text-sm text-emerald-100">
-              <PartyPopper size={16} />
-              Discover Amazing Experiences
-            </span>
-
-            <h1 className="mt-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-              Explore Events
-              <span className="block text-emerald-400">
-                Find Your Next Experience
-              </span>
-            </h1>
-
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-emerald-100/80">
-              Discover exciting events around you, connect with people,
-              and create unforgettable memories with Ayojon.
-            </p>
-
-            <Link
-              href="/create-event"
-              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-50"
-            >
-              Create an Event
-              <ArrowUpRight size={18} />
-            </Link>
-          </div>
-        </section>
-
         {/* Main Events Section */}
         <section className="mx-auto max-w-7xl px-5 py-16 sm:py-20">
           {/* Section Heading */}
@@ -303,25 +273,6 @@ export default function EventsPage() {
           )}
         </section>
 
-        {/* Bottom CTA */}
-        <section className="px-5 pb-20">
-          <div className="mx-auto max-w-7xl rounded-3xl bg-emerald-900 px-6 py-12 text-center text-white sm:px-12">
-            <h2 className="text-3xl font-bold sm:text-4xl">
-              Have an Event in Mind?
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl leading-7 text-emerald-100/80">
-              Bring people together and create something memorable.
-              Start organizing your event with Ayojon.
-            </p>
-            <Link
-              href="/create-event"
-              className="mt-7 inline-flex items-center gap-2 rounded-xl bg-white px-6 py-3.5 text-sm font-semibold text-emerald-900 transition hover:bg-emerald-50"
-            >
-              Create Your Event
-              <ArrowRight size={18} />
-            </Link>
-          </div>
-        </section>
       </div>
     </MainLayout>
   );
