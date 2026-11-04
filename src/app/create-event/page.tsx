@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "../main-layout";
 import {
   ArrowLeft,
@@ -12,20 +12,38 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-const categories = [
-  "Wedding",
-  "Birthday",
-  "Charity",
-  "Social Gathering",
-  "Festival",
-  "Education",
-  "Conference",
-  "Other",
-];
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { ICategory } from "@/types";
+
+
 const CreateEventPage = () => {
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<ICategory[]>([]);
   const [imagePreview, setImagePreview] = useState("");
+  const {data: session} = authClient.useSession();
+  const user = session?.user;
+  const router = useRouter();
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("http://localhost:8000/categories");
 
+        if (!res.ok) {
+          throw new Error("Failed to fetch categories");
+        }
+
+        const data = await res.json();
+        setCategories(data);
+      } catch (error) {
+        console.error("Category fetching error:", error);
+        toast.error("Could not load categories");
+      }
+    };
+
+    fetchCategories();
+  }, []);
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
@@ -36,21 +54,52 @@ const CreateEventPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
 
-    const formData = new FormData(e.currentTarget);
+    if (!user) {
+      toast.error("Please login first!");
+      router.push("/signin");
+      return;
+    }
 
-    const eventData = Object.fromEntries(formData.entries());
-    const res = await fetch("http://localhost:8000/event", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(eventData),
-    });
-    const data = await res.json();
-    // console.log("Event Data:", data);
-    setLoading(false);
+    try {
+      setLoading(true);
+
+      const formData = new FormData(e.currentTarget);
+
+      const eventData = {
+        ...Object.fromEntries(formData.entries()),
+        organizer: user.name,
+        organizerEmail: user.email,
+        capacity: Number(formData.get("capacity")),
+        createdAt: new Date(),
+        status: "upcoming",
+      };
+
+      const res = await fetch("http://localhost:8000/event", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventData),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.message || "Event creation failed!");
+        return;
+      }
+
+      toast.success("Event created successfully!");
+      router.push("/manage-events");
+      router.refresh();
+
+    } catch (error) {
+      console.error("Create event error:", error);
+      toast.error("Something went wrong!");
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <MainLayout>
@@ -121,8 +170,8 @@ const CreateEventPage = () => {
                     </option>
 
                     {categories.map((category) => (
-                      <option key={category} value={category}>
-                        {category}
+                      <option key={category._id} value={category.name}>
+                        {category.name}
                       </option>
                     ))}
                   </select>
