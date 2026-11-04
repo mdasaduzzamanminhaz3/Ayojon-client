@@ -1,30 +1,26 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import MainLayout from "../main-layout";
-import {
-  ArrowLeft,
-  CalendarDays,
-  Clock,
-  ImagePlus,
-  MapPin,
-  Sparkles,
-  Users,
-} from "lucide-react";
-import Link from "next/link";
-import Image from "next/image";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { ICategory } from "@/types";
 
+interface ICategory {
+  _id: string;
+  name: string;
+}
 
 const CreateEventPage = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<ICategory[]>([]);
-  const [imagePreview, setImagePreview] = useState("");
-  const {data: session} = authClient.useSession();
+  const [imageUrl, setImageUrl] = useState("");
+
+  const { data: session } = authClient.useSession();
   const user = session?.user;
+
   const router = useRouter();
+
+  // Fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -44,33 +40,35 @@ const CreateEventPage = () => {
 
     fetchCategories();
   }, []);
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
 
-    if (file) {
-      setImagePreview(URL.createObjectURL(file));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // Handle event submission
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ) => {
     e.preventDefault();
 
     if (!user) {
-      toast.error("Please login first!");
+      toast.error("Please sign in to create an event");
       router.push("/signin");
       return;
     }
 
-    try {
-      setLoading(true);
+    setLoading(true);
 
+    try {
       const formData = new FormData(e.currentTarget);
 
       const eventData = {
-        ...Object.fromEntries(formData.entries()),
+        title: formData.get("title"),
+        category: formData.get("category"),
+        description: formData.get("description"),
+        date: formData.get("date"),
+        time: formData.get("time"),
+        location: formData.get("location"),
+        capacity: Number(formData.get("capacity")),
+        image: imageUrl.trim(),
         organizer: user.name,
         organizerEmail: user.email,
-        capacity: Number(formData.get("capacity")),
         createdAt: new Date(),
         status: "upcoming",
       };
@@ -83,268 +81,256 @@ const CreateEventPage = () => {
         body: JSON.stringify(eventData),
       });
 
-      const data = await res.json();
-
       if (!res.ok) {
-        toast.error(data.message || "Event creation failed!");
-        return;
+        const errorData = await res.json().catch(() => null);
+        throw new Error(
+          errorData?.message || "Failed to create event"
+        );
       }
 
       toast.success("Event created successfully!");
+
       router.push("/manage-events");
       router.refresh();
-
     } catch (error) {
-      console.error("Create event error:", error);
-      toast.error("Something went wrong!");
+      console.error("Event creation error:", error);
+
+      toast.error(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong"
+      );
     } finally {
       setLoading(false);
     }
   };
+
   return (
     <MainLayout>
-      <main className="min-h-screen bg-[#f8faf8] px-4 py-12 dark:bg-[#101b16] sm:px-6">
-        <div className="mx-auto max-w-4xl">
-          {/* Back Button */}
-          <Link
-            href="/events"
-            className="mb-8 inline-flex items-center gap-2 text-sm font-semibold text-gray-600 transition hover:text-emerald-700 dark:text-gray-400 dark:hover:text-emerald-400"
-          >
-            <ArrowLeft size={18} />
-            Back to Events
-          </Link>
+      <div className="min-h-screen bg-background px-4 py-12">
+        <div className="mx-auto max-w-3xl">
 
-          {/* Heading */}
-          <div className="mb-10">
-            <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl">
+          {/* Header */}
+          <div className="mb-8 text-center">
+            <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
               Create Your Event
             </h1>
 
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-gray-500 dark:text-gray-400 sm:text-base">
-              Bring people together! Share your event details and let others
-              discover and join your experience.
+            <p className="mt-3 text-muted-foreground">
+              Share your event with people and make something memorable.
             </p>
           </div>
 
-          {/* Form Card */}
+          {/* Form */}
           <form
             onSubmit={handleSubmit}
-            className="space-y-8 rounded-3xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900 sm:p-8"
+            className="space-y-6 rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8"
           >
-            {/* Basic Information */}
-            <section>
-              <h2 className="mb-6 text-xl font-bold text-gray-900 dark:text-white">
-                Basic Information
-              </h2>
 
-              <div className="space-y-5">
-                {/* Event Title */}
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    Event Title *
-                  </label>
-
-                  <input
-                    type="text"
-                    name="title"
-                    placeholder="Enter your event name"
-                    required
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                  />
-                </div>
-
-                {/* Category */}
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    Event Category *
-                  </label>
-
-                  <select
-                    name="category"
-                    required
-                    defaultValue=""
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-emerald-600 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                  >
-                    <option value="" disabled>
-                      Select a category
-                    </option>
-
-                    {categories.map((category) => (
-                      <option key={category._id} value={category.name}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* Description */}
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    Event Description *
-                  </label>
-
-                  <textarea
-                    name="description"
-                    rows={5}
-                    required
-                    placeholder="Tell people what your event is about..."
-                    className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                  />
-                </div>
-              </div>
-            </section>
-
-            <div className="border-t border-gray-100 dark:border-gray-800" />
-
-            {/* Date and Location */}
-            <section>
-              <h2 className="mb-6 text-xl font-bold text-gray-900 dark:text-white">
-                Date & Location
-              </h2>
-
-              <div className="grid gap-5 sm:grid-cols-2">
-                {/* Date */}
-                <div>
-                  <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    <CalendarDays size={17} className="text-emerald-700" />
-                    Event Date *
-                  </label>
-
-                  <input
-                    type="date"
-                    name="date"
-                    required
-                    min={new Date().toISOString().split("T")[0]}
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-emerald-600 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                  />
-                </div>
-
-                {/* Time */}
-                <div>
-                  <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    <Clock size={17} className="text-emerald-700" />
-                    Event Time *
-                  </label>
-
-                  <input
-                    type="time"
-                    name="time"
-                    required
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-emerald-600 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                  />
-                </div>
-
-                {/* Location */}
-                <div className="sm:col-span-2">
-                  <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    <MapPin size={17} className="text-emerald-700" />
-                    Event Location *
-                  </label>
-
-                  <input
-                    type="text"
-                    name="location"
-                    required
-                    placeholder="Enter event venue or address"
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-emerald-600 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                  />
-                </div>
-
-                {/* Capacity */}
-                <div className="sm:col-span-2">
-                  <label className="mb-2 flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
-                    <Users size={17} className="text-emerald-700" />
-                    Maximum Attendees *
-                  </label>
-
-                  <input
-                    type="number"
-                    name="capacity"
-                    min="1"
-                    required
-                    placeholder="e.g. 100"
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm outline-none focus:border-emerald-600 dark:border-gray-700 dark:bg-gray-800 dark:text-white"
-                  />
-                </div>
-              </div>
-            </section>
-
-            <div className="border-t border-gray-100 dark:border-gray-800" />
-
-            {/* Cover Image */}
-            <section>
-              <h2 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
-                Event Cover Image
-              </h2>
-
-              <p className="mb-5 text-sm text-gray-500 dark:text-gray-400">
-                Upload an attractive image to make your event stand out.
-              </p>
-
+            {/* Event Title */}
+            <div className="space-y-2">
               <label
-                htmlFor="image"
-                className="flex min-h-52 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 text-center transition hover:border-emerald-600 hover:bg-emerald-50/50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-emerald-950/20"
+                htmlFor="title"
+                className="text-sm font-semibold"
               >
-                {imagePreview ? (
-                  <Image
-                    src={imagePreview}
-                    width={600}
-                    height={400}
-                    alt="Event preview"
-                    className="h-64 w-full object-cover"
-                  />
-                ) : (
-                  <>
-                    <div className="mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
-                      <ImagePlus size={27} />
-                    </div>
+                Event Title
+              </label>
 
-                    <p className="font-semibold text-gray-800 dark:text-white">
-                      Click to upload an image
-                    </p>
+              <input
+                id="title"
+                type="text"
+                name="title"
+                placeholder="Enter event title"
+                required
+                className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+              />
+            </div>
 
-                    <p className="mt-2 text-xs text-gray-500">
-                      PNG, JPG or WEBP
-                    </p>
-                  </>
-                )}
+            {/* Category */}
+            <div className="space-y-2">
+              <label
+                htmlFor="category"
+                className="text-sm font-semibold"
+              >
+                Event Category
+              </label>
+
+              <select
+                id="category"
+                name="category"
+                required
+                defaultValue=""
+                className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+              >
+                <option value="" disabled>
+                  Select a category
+                </option>
+
+                {categories.map((category) => (
+                  <option
+                    key={category._id}
+                    value={category.name}
+                  >
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Description */}
+            <div className="space-y-2">
+              <label
+                htmlFor="description"
+                className="text-sm font-semibold"
+              >
+                Event Description
+              </label>
+
+              <textarea
+                id="description"
+                name="description"
+                rows={5}
+                placeholder="Describe your event..."
+                required
+                className="w-full resize-none rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+              />
+            </div>
+
+            {/* Date and Time */}
+            <div className="grid gap-6 md:grid-cols-2">
+
+              <div className="space-y-2">
+                <label
+                  htmlFor="date"
+                  className="text-sm font-semibold"
+                >
+                  Event Date
+                </label>
 
                 <input
-                  id="image"
-                  name="image"
-                  type="file"
-                  accept="image/png,image/jpeg,image/webp"
-                  onChange={handleImageChange}
-                  className="hidden"
+                  id="date"
+                  type="date"
+                  name="date"
+                  required
+                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
                 />
-              </label>
-            </section>
+              </div>
 
-            {/* Submit */}
-            <div className="flex flex-col gap-3 border-t border-gray-100 pt-6 dark:border-gray-800 sm:flex-row sm:justify-end">
-              <Link
-                href="/events"
-                className="flex h-12 items-center justify-center rounded-xl border border-gray-200 px-6 text-sm font-semibold text-gray-700 transition hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
-              >
-                Cancel
-              </Link>
+              <div className="space-y-2">
+                <label
+                  htmlFor="time"
+                  className="text-sm font-semibold"
+                >
+                  Event Time
+                </label>
 
-              <button
-                type="submit"
-                disabled={loading}
-                className="flex h-12 items-center justify-center gap-2 rounded-xl bg-emerald-700 px-8 text-sm font-semibold text-white transition hover:bg-emerald-800 disabled:opacity-60 dark:bg-emerald-600 dark:hover:bg-emerald-500"
-              >
-                {loading ? "Creating Event..." : "Create Event"}
-                {!loading && <Sparkles size={17} />}
-              </button>
+                <input
+                  id="time"
+                  type="time"
+                  name="time"
+                  required
+                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                />
+              </div>
+
             </div>
-          </form>
 
-          <p className="mt-6 text-center text-xs text-gray-400">
-            Make every gathering memorable with Ayojon.
-          </p>
+            {/* Location and Capacity */}
+            <div className="grid gap-6 md:grid-cols-2">
+
+              <div className="space-y-2">
+                <label
+                  htmlFor="location"
+                  className="text-sm font-semibold"
+                >
+                  Event Location
+                </label>
+
+                <input
+                  id="location"
+                  type="text"
+                  name="location"
+                  placeholder="Enter event location"
+                  required
+                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label
+                  htmlFor="capacity"
+                  className="text-sm font-semibold"
+                >
+                  Event Capacity
+                </label>
+
+                <input
+                  id="capacity"
+                  type="number"
+                  name="capacity"
+                  min="1"
+                  placeholder="Enter maximum attendees"
+                  required
+                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                />
+              </div>
+
+            </div>
+
+            {/* Optional Image URL */}
+            <div className="space-y-2">
+              <label
+                htmlFor="image"
+                className="text-sm font-semibold"
+              >
+                Event Cover Image
+                <span className="ml-2 font-normal text-muted-foreground">
+                  (Optional)
+                </span>
+              </label>
+
+              <input
+                id="image"
+                type="url"
+                name="image"
+                value={imageUrl}
+                onChange={(e) => setImageUrl(e.target.value)}
+                placeholder="https://example.com/event-image.jpg"
+                className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+              />
+
+              <p className="text-xs text-muted-foreground">
+                Add an image URL if you want to display a cover image.
+              </p>
+            </div>
+
+            {/* Organizer Information */}
+            <div className="rounded-lg bg-muted/50 p-4">
+              <p className="text-sm font-semibold">
+                Event Organizer
+              </p>
+
+              <p className="mt-1 text-sm text-muted-foreground">
+                {user?.name || "Loading..."}
+              </p>
+
+              <p className="text-sm text-muted-foreground">
+                {user?.email || ""}
+              </p>
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={loading || !user}
+              className="w-full rounded-lg bg-emerald-700 px-6 py-3 font-semibold text-white transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {loading ? "Creating Event..." : "Create Event"}
+            </button>
+
+          </form>
         </div>
-      </main>
+      </div>
     </MainLayout>
   );
 };
