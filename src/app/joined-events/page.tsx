@@ -6,7 +6,7 @@ const JoinedEvents = () => {
         <MainLayout>
 
         <div>
-            joined events page
+            my all joined page joined events page
         </div>
         </MainLayout>
     );

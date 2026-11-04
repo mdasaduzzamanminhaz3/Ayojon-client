@@ -49,7 +49,7 @@ const CreateEventPage = () => {
       body: JSON.stringify(eventData),
     });
     const data = await res.json();
-    console.log("Event Data:", data);
+    // console.log("Event Data:", data);
     setLoading(false);
   };
   return (

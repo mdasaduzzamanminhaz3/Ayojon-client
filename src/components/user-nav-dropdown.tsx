@@ -41,7 +41,7 @@ export default function UserNavDropdown({
   user,
 }: UserNavDropdownProps) {
   const router = useRouter();
-console.log("profile image",user.image);
+// console.log("profile image",user.image);
   const userName = user.name || "User";
   const userEmail = user.email || "";
   const userInitial = userName.trim().charAt(0).toUpperCase() || "U";
