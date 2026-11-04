@@ -17,7 +17,7 @@ const CreateEventPage = () => {
 
   const { data: session } = authClient.useSession();
   const user = session?.user;
-
+const today = new Date().toISOString().split("T")[0];
   const router = useRouter();
 
   // Fetch categories
@@ -211,6 +211,7 @@ const CreateEventPage = () => {
                   id="date"
                   type="date"
                   name="date"
+                  min={today}
                   required
                   className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
                 />

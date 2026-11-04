@@ -23,7 +23,8 @@ interface EditEventModalProps {
 const EditEventModal = ({ event, onUpdated }: EditEventModalProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-    const router = useRouter();
+  const today = new Date().toISOString().split("T")[0];  
+  const router = useRouter();
   const inputClass =
     "w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-600";
 
@@ -159,10 +160,12 @@ const EditEventModal = ({ event, onUpdated }: EditEventModalProps) => {
                 Date
               </label>
 
+
               <input
                 id="edit-date"
                 name="date"
                 type="date"
+                  min={today}
                 defaultValue={event.date}
                 required
                 className={inputClass}
