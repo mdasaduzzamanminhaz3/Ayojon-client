@@ -17,7 +17,7 @@ const CreateEventPage = () => {
 
   const { data: session } = authClient.useSession();
   const user = session?.user;
-const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split("T")[0];
   const router = useRouter();
 
   // Fetch categories
@@ -72,11 +72,14 @@ const today = new Date().toISOString().split("T")[0];
         createdAt: new Date(),
         status: "upcoming",
       };
-       
+       const {data,error} = await authClient.token();
+      const token = data?.token;
+
       const res = await fetch("http://localhost:8000/event", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`
         },
         body: JSON.stringify(eventData),
       });
