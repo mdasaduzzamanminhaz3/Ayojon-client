@@ -141,7 +141,7 @@ const EventDetailsPage = async ({
               </div>
 
               <JoinEventButton
-                eventId={event._id?.toString() || event.id || id}
+                event={event}
               />
 
               <p className="mt-4 text-center text-xs text-muted-foreground">

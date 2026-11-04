@@ -3,55 +3,71 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import { IEvent } from "@/types";
+import { toast } from "sonner";
 
-const JoinEventButton = ({ eventId }: { eventId: string }) => {
+const JoinEventButton = ({ event }:{event:IEvent}) => {
   const router = useRouter();
   const { data: session } = authClient.useSession();
-
+  const user = session?.user;
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleJoinEvent = async () => {
-    if (!session?.user) {
-      router.push("/signin");
+const handleJoinEvent = async () => {
+  if (!user) {
+    router.push("/signin");
+    return;
+  }
+
+  try {
+    setLoading(true);
+    setMessage("");
+
+    const data = {
+      eventId: event._id,
+      username: user.name,
+      email: user.email,
+      image: user.image,
+      title: event.title,
+      category: event.category,
+      date: event.date,
+      time: event.time,
+      location: event.location,
+      joinedDate: new Date().toISOString(),
+    };
+
+    const res = await fetch("http://localhost:8000/join-event", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await res.json();
+
+    if (!res.ok) {
+      toast.error(result.message || "Failed to join event");
       return;
     }
 
-    try {
-      setLoading(true);
-      setMessage("");
+    toast.success("Event joined successfully!", {
+      description: "You have successfully joined this event.",
+    });
 
-      const response = await fetch(
-        `http://localhost:8000/event/${eventId}/join`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: session.user.id,
-          }),
-        }
-      );
+    router.refresh();
 
-      const result = await response.json();
+  } catch (error) {
+    console.error(error);
 
-      if (!response.ok) {
-        throw new Error(result.message || "Could not join the event");
-      }
+    toast.error("Something went wrong!", {
+      description: "Please try again later.",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
 
-      setMessage(result.message || "You joined the event successfully!");
-      router.refresh();
-    } catch (error) {
-      setMessage(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div>
