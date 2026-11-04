@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { IEvent } from "@/types";
 import ManageEventCard from "@/components/Event/manage-event-card";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 const ManageEvents = async () => {
   const session = await auth.api.getSession({
@@ -19,11 +20,12 @@ const ManageEvents = async () => {
     redirect("/signin");
   }
 
+  const token = await getTokenFromServer();
   const res = await fetch(
-    `http://localhost:8000/my-events/${encodeURIComponent(user.email)}`,
-    {
-      cache: "no-store",
-    }
+    `http://localhost:8000/my-events/${(user.email)}`,
+    {headers:{
+      authorization: `Bearer ${token}`
+    }}
   );
 
   if (!res.ok) {
