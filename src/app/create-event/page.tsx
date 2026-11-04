@@ -4,6 +4,7 @@ import MainLayout from "../main-layout";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 interface ICategory {
   _id: string;
@@ -72,8 +73,8 @@ const CreateEventPage = () => {
         createdAt: new Date(),
         status: "upcoming",
       };
-       const {data,error} = await authClient.token();
-      const token = data?.token;
+
+      const token = await getTokenFromClient();
 
       const res = await fetch("http://localhost:8000/event", {
         method: "POST",
