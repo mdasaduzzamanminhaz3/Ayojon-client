@@ -46,3 +46,14 @@ export interface ICategory {
   slug: string;
   icon?: string;
 }
+export interface IJoinedEvent {
+  _id?: string;
+  eventId: string;
+  title: string;
+  category: string;
+  image: string;
+  date: string;
+  time: string;
+  location: string;
+  joinedDate: string;
+}

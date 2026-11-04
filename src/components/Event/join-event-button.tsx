@@ -27,7 +27,7 @@ const handleJoinEvent = async () => {
       eventId: event._id,
       username: user.name,
       email: user.email,
-      image: user.image,
+      image: event.image,
       title: event.title,
       category: event.category,
       date: event.date,
