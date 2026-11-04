@@ -72,7 +72,7 @@ const today = new Date().toISOString().split("T")[0];
         createdAt: new Date(),
         status: "upcoming",
       };
-
+       
       const res = await fetch("http://localhost:8000/event", {
         method: "POST",
         headers: {

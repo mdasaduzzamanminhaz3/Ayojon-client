@@ -11,6 +11,8 @@ import {
 import MainLayout from "../../main-layout";
 import JoinEventButton from "../../../components/Event/join-event-button";
 import { IEvent } from "@/types";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const EventDetailsPage = async ({
   params,
@@ -18,10 +20,15 @@ const EventDetailsPage = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
+    const jwtToken = await auth.api.getToken({
+        headers:await headers(),
+      });
 
   const response = await fetch(
     `http://localhost:8000/event/${id}`,
-    { cache: "no-store" }
+    {headers:{
+      authorization: `Bearer ${jwtToken?.token}`
+    }}
   );
 
   if (response.status === 404) {
