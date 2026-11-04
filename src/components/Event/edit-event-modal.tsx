@@ -82,17 +82,18 @@ const EditEventModal = ({ event, onUpdated }: EditEventModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <button
-          type="button"
-          className="group flex flex-1 items-center justify-center gap-2 rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+      <DialogTrigger >
+        <div
+          role="button"
+          tabIndex={0}
+          className="group flex flex-1 items-center justify-center gap-2 rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 cursor-pointer"
         >
           <Pencil
             size={16}
             className="transition-transform group-hover:-rotate-12"
           />
           Edit Event
-        </button>
+        </div>
       </DialogTrigger>
 
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">

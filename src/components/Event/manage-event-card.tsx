@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { IEvent } from "@/types";
-import { CalendarDays, Clock, MapPin, Pencil, Trash2 } from "lucide-react";
+import { CalendarDays, Clock, MapPin, Trash2 } from "lucide-react";
 import EditEventModal from "./edit-event-modal";
+import DeleteEventButton from "./delete-event-button";
 
 interface ManageEventCardProps {
   event: IEvent;
@@ -12,14 +12,13 @@ interface ManageEventCardProps {
 const ManageEventCard = ({ event }: ManageEventCardProps) => {
   return (
     <div className="overflow-hidden rounded-xl border bg-card shadow-sm transition hover:shadow-md">
-      {/* Event Image */}
+      {/* Event Image - Added `relative h-48 w-full` */}
       <div className="relative h-48 w-full">
         <Image
-          src={event.image}
+          src={event.image && event.image.trim() !== "" ? event.image : "/placeholder.png"}
           alt={event.title}
           fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-cover"
+          className="object-cover" // Image overflow/stretch fix korar jonno eta khub dorkari
         />
       </div>
 
@@ -61,18 +60,9 @@ const ManageEventCard = ({ event }: ManageEventCardProps) => {
 
         {/* Actions */}
         <div className="flex gap-3 border-t border-border pt-4">
-<EditEventModal event={event}/>
+          <EditEventModal event={event} />
 
-          <button
-            type="button"
-            className="group flex flex-1 items-center justify-center gap-2 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-muted-foreground transition-all duration-200 hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:hover:border-red-900 dark:hover:bg-red-950/40 dark:hover:text-red-400"
-          >
-            <Trash2
-              size={16}
-              className="transition-transform duration-200 group-hover:scale-110"
-            />
-            Delete
-          </button>
+       <DeleteEventButton eventId={event._id || event.id} />
         </div>
       </div>
     </div>
