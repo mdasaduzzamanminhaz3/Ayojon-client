@@ -15,7 +15,7 @@ import EventCard from "../Event/eventCard";
 
 
 export default async function UpcomingEvents() {
-  const res = await fetch("http://localhost:8000/events/upcoming");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/upcoming`);
   const events = await res.json();
   return (
     <section className="bg-white py-20 dark:bg-[#101b16]">

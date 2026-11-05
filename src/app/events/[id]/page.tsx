@@ -22,7 +22,7 @@ const EventDetailsPage = async ({
   const token = await getTokenFromServer()
 
   const response = await fetch(
-    `http://localhost:8000/event/${id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/event/${id}`,
     {headers:{
       authorization: `Bearer ${token}`
     }}

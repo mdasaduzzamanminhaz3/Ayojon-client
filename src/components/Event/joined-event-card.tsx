@@ -32,7 +32,7 @@ const JoinedEventCard = ({
     try {
       setLoading(true);
       const token = await getTokenFromClient();
-      const res = await fetch(`http://localhost:8000/joined-events/${event._id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/joined-events/${event._id}`, {
         method: "DELETE",
         headers:{
           authorization:`Bearer ${token}`

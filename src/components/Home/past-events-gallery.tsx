@@ -26,7 +26,7 @@ const PastEventsGallery = () => {
   useEffect(() => {
     const fetchPastEvents = async () => {
       try {
-        const res = await fetch("http://localhost:8000/events/past");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/past`);
 
         if (!res.ok) {
           throw new Error("Failed to fetch past events");

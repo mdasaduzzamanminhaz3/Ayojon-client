@@ -59,7 +59,7 @@ export default function SignUpPage() {
       router.push("/");
       
     } catch (err ) {
-      setErrorMessage(err.message || "An unexpected error occurred.");
+      setErrorMessage((err as Error).message || "An unexpected error occurred.");
       setLoading(false);
     } finally {
       setLoading(false);

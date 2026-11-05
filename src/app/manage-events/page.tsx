@@ -22,7 +22,7 @@ const ManageEvents = async () => {
 
   const token = await getTokenFromServer();
   const res = await fetch(
-    `http://localhost:8000/my-events/${(user.email)}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/my-events/${(user.email)}`,
     {headers:{
       authorization: `Bearer ${token}`
     }}

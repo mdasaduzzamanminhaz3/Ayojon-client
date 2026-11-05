@@ -32,7 +32,7 @@ const DeleteEventButton = ({ eventId }: DeleteEventButtonProps) => {
     
     try {
       const res = await fetch(
-        `http://localhost:8000/event/${eventId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/event/${eventId}`,
         {
           method: "DELETE",
           headers:{
@@ -51,7 +51,7 @@ const DeleteEventButton = ({ eventId }: DeleteEventButtonProps) => {
 
       toast.success("Event deleted successfully!");
 
-      // Server Component-এর data আবার fetch করবে।
+      
       router.refresh();
 
     } catch (error) {

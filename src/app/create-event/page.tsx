@@ -25,7 +25,7 @@ const CreateEventPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:8000/categories");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
 
         if (!res.ok) {
           throw new Error("Failed to fetch categories");
@@ -76,7 +76,7 @@ const CreateEventPage = () => {
 
       const token = await getTokenFromClient();
 
-      const res = await fetch("http://localhost:8000/event", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

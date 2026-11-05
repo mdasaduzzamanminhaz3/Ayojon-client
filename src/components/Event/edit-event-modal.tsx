@@ -53,7 +53,7 @@ const EditEventModal = ({ event, onUpdated }: EditEventModalProps) => {
         image: String(formData.get("image") || "").trim(),
       };
       const token = await getTokenFromClient()
-      const res = await fetch(`http://localhost:8000/event/${event._id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event/${event._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -8,8 +8,8 @@ export default async function EventsPage() {
 
   try {
     const [categoryRes, eventRes] = await Promise.all([
-      fetch("http://localhost:8000/categories"),
-      fetch("http://localhost:8000/events/upcoming"),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`),
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/upcoming`),
     ]);
 
     if (!categoryRes.ok || !eventRes.ok) {
