@@ -17,6 +17,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 interface DeleteEventButtonProps {
   eventId: string;
@@ -25,15 +26,18 @@ interface DeleteEventButtonProps {
 const DeleteEventButton = ({ eventId }: DeleteEventButtonProps) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
   const handleDelete = async () => {
-    setLoading(true);
-
+      setLoading(true);
+      const token = await getTokenFromClient();
+    
     try {
       const res = await fetch(
         `http://localhost:8000/event/${eventId}`,
         {
           method: "DELETE",
+          headers:{
+            authorization:`Bearer ${token}`
+          }
         }
       );
 
