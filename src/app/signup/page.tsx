@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -44,7 +45,7 @@ export default function SignUpPage() {
         password: userData.password as string,
         name: userData.name as string,
         image: userData.image as string,
-        callbackURL: "/",
+        callbackURL: "/signin",
       });
 
       if (error) {
@@ -55,9 +56,9 @@ export default function SignUpPage() {
       }
 
       console.log("Signup Success:", data);
-
+      toast.success('account create successfully. readirecting login page....')
       // Success hole manually redirect kore dibe
-      router.push("/");
+      router.push("/signin");
     } catch (err) {
       setErrorMessage(
         (err as Error).message || "An unexpected error occurred.",

@@ -18,6 +18,7 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -57,7 +58,7 @@ export default function LoginPage() {
         );
         return;
       }
-
+      toast.success('Login successful!')
       setSuccessMessage("Login successful! Redirecting...");
 
       router.push("/");
