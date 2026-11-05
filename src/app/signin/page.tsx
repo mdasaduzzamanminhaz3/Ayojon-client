@@ -16,12 +16,19 @@ import {
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  
+  const handleGoogleSignIn = async() => {
+    const data = await authClient.signIn.social({
+    provider: "google",
+  });
+  };
 
   const router = useRouter();
 
@@ -262,6 +269,15 @@ export default function LoginPage() {
                 Create an account
               </Link>
             </p>
+
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="btn flex h-11 w-full items-center justify-center gap-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-700 transition hover:bg-slate-50 active:scale-[0.99]"
+            >
+              <FcGoogle />
+              Login with Google
+            </button>
 
           </div>
         </div>
