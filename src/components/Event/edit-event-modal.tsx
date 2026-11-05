@@ -14,6 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useRouter } from "next/navigation";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 interface EditEventModalProps {
   event: IEvent;
@@ -51,11 +52,12 @@ const EditEventModal = ({ event, onUpdated }: EditEventModalProps) => {
         capacity: Number(formData.get("capacity")),
         image: String(formData.get("image") || "").trim(),
       };
-
+      const token = await getTokenFromClient()
       const res = await fetch(`http://localhost:8000/event/${event._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          authorization:`Bearer ${token}`
         },
         body: JSON.stringify(updatedEvent),
       });
