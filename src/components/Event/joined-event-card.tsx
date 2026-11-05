@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CalendarDays, Clock, MapPin, XCircle } from "lucide-react";
 import { toast } from "sonner";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 interface IJoinedEvent {
   _id?: string;
@@ -30,9 +31,12 @@ const JoinedEventCard = ({
   const handleCancel = async () => {
     try {
       setLoading(true);
-
+      const token = await getTokenFromClient();
       const res = await fetch(`http://localhost:8000/joined-events/${event._id}`, {
         method: "DELETE",
+        headers:{
+          authorization:`Bearer ${token}`
+        }
       });
 
       const result = await res.json();

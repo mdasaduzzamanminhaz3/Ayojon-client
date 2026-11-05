@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import JoinedEventCard from "@/components/Event/joined-event-card";
 import { IJoinedEvent } from "@/types";
+import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
 
 
@@ -22,8 +23,13 @@ const JoinedEvents = async () => {
   let joined: IJoinedEvent[] = [];
 
   try {
+    const token = await getTokenFromServer()
     const res = await fetch(
-      `http://localhost:8000/joined-events/${(user.email)}`);
+      `http://localhost:8000/joined-events/${(user.email)}`,{
+        headers:{
+          authorization:`Bearer ${token}`
+        }
+      });
 
     if (!res.ok) {
       throw new Error("Failed to fetch joined events");
