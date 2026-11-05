@@ -25,7 +25,9 @@ const CreateEventPage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/categories`);
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/categories`,
+        );
 
         if (!res.ok) {
           throw new Error("Failed to fetch categories");
@@ -43,9 +45,7 @@ const CreateEventPage = () => {
   }, []);
 
   // Handle event submission
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!user) {
@@ -80,16 +80,14 @@ const CreateEventPage = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          authorization: `Bearer ${token}`
+          authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(eventData),
       });
 
       if (!res.ok) {
         const errorData = await res.json().catch(() => null);
-        throw new Error(
-          errorData?.message || "Failed to create event"
-        );
+        throw new Error(errorData?.message || "Failed to create event");
       }
 
       toast.success("Event created successfully!");
@@ -100,9 +98,7 @@ const CreateEventPage = () => {
       console.error("Event creation error:", error);
 
       toast.error(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong"
+        error instanceof Error ? error.message : "Something went wrong",
       );
     } finally {
       setLoading(false);
@@ -113,7 +109,6 @@ const CreateEventPage = () => {
     <MainLayout>
       <div className="min-h-screen bg-background px-4 py-12">
         <div className="mx-auto max-w-3xl">
-
           {/* Header */}
           <div className="mb-8 text-center">
             <h1 className="text-3xl font-bold tracking-tight md:text-4xl">
@@ -130,13 +125,9 @@ const CreateEventPage = () => {
             onSubmit={handleSubmit}
             className="space-y-6 rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8"
           >
-
             {/* Event Title */}
             <div className="space-y-2">
-              <label
-                htmlFor="title"
-                className="text-sm font-semibold"
-              >
+              <label htmlFor="title" className="text-sm font-semibold">
                 Event Title
               </label>
 
@@ -146,16 +137,13 @@ const CreateEventPage = () => {
                 name="title"
                 placeholder="Enter event title"
                 required
-                className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-rose-600"
               />
             </div>
 
             {/* Category */}
             <div className="space-y-2">
-              <label
-                htmlFor="category"
-                className="text-sm font-semibold"
-              >
+              <label htmlFor="category" className="text-sm font-semibold">
                 Event Category
               </label>
 
@@ -164,17 +152,14 @@ const CreateEventPage = () => {
                 name="category"
                 required
                 defaultValue=""
-                className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-rose-600"
               >
                 <option value="" disabled>
                   Select a category
                 </option>
 
                 {categories.map((category) => (
-                  <option
-                    key={category._id}
-                    value={category.name}
-                  >
+                  <option key={category._id} value={category.name}>
                     {category.name}
                   </option>
                 ))}
@@ -183,10 +168,7 @@ const CreateEventPage = () => {
 
             {/* Description */}
             <div className="space-y-2">
-              <label
-                htmlFor="description"
-                className="text-sm font-semibold"
-              >
+              <label htmlFor="description" className="text-sm font-semibold">
                 Event Description
               </label>
 
@@ -196,18 +178,14 @@ const CreateEventPage = () => {
                 rows={5}
                 placeholder="Describe your event..."
                 required
-                className="w-full resize-none rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                className="w-full resize-none rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-rose-600"
               />
             </div>
 
             {/* Date and Time */}
             <div className="grid gap-6 md:grid-cols-2">
-
               <div className="space-y-2">
-                <label
-                  htmlFor="date"
-                  className="text-sm font-semibold"
-                >
+                <label htmlFor="date" className="text-sm font-semibold">
                   Event Date
                 </label>
 
@@ -217,15 +195,12 @@ const CreateEventPage = () => {
                   name="date"
                   min={today}
                   required
-                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-rose-600"
                 />
               </div>
 
               <div className="space-y-2">
-                <label
-                  htmlFor="time"
-                  className="text-sm font-semibold"
-                >
+                <label htmlFor="time" className="text-sm font-semibold">
                   Event Time
                 </label>
 
@@ -234,20 +209,15 @@ const CreateEventPage = () => {
                   type="time"
                   name="time"
                   required
-                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-rose-600"
                 />
               </div>
-
             </div>
 
             {/* Location and Capacity */}
             <div className="grid gap-6 md:grid-cols-2">
-
               <div className="space-y-2">
-                <label
-                  htmlFor="location"
-                  className="text-sm font-semibold"
-                >
+                <label htmlFor="location" className="text-sm font-semibold">
                   Event Location
                 </label>
 
@@ -257,15 +227,12 @@ const CreateEventPage = () => {
                   name="location"
                   placeholder="Enter event location"
                   required
-                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-rose-600"
                 />
               </div>
 
               <div className="space-y-2">
-                <label
-                  htmlFor="capacity"
-                  className="text-sm font-semibold"
-                >
+                <label htmlFor="capacity" className="text-sm font-semibold">
                   Event Capacity
                 </label>
 
@@ -276,18 +243,14 @@ const CreateEventPage = () => {
                   min="1"
                   placeholder="Enter maximum attendees"
                   required
-                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                  className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-rose-600"
                 />
               </div>
-
             </div>
 
             {/* Optional Image URL */}
             <div className="space-y-2">
-              <label
-                htmlFor="image"
-                className="text-sm font-semibold"
-              >
+              <label htmlFor="image" className="text-sm font-semibold">
                 Event Cover Image
                 <span className="ml-2 font-normal text-muted-foreground">
                   (Optional)
@@ -301,7 +264,7 @@ const CreateEventPage = () => {
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 placeholder="https://example.com/event-image.jpg"
-                className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-emerald-600"
+                className="w-full rounded-lg border border-input bg-background px-4 py-3 outline-none transition focus:ring-2 focus:ring-rose-600"
               />
 
               <p className="text-xs text-muted-foreground">
@@ -311,9 +274,7 @@ const CreateEventPage = () => {
 
             {/* Organizer Information */}
             <div className="rounded-lg bg-muted/50 p-4">
-              <p className="text-sm font-semibold">
-                Event Organizer
-              </p>
+              <p className="text-sm font-semibold">Event Organizer</p>
 
               <p className="mt-1 text-sm text-muted-foreground">
                 {user?.name || "Loading..."}
@@ -328,11 +289,10 @@ const CreateEventPage = () => {
             <button
               type="submit"
               disabled={loading || !user}
-              className="w-full rounded-lg bg-emerald-700 px-6 py-3 font-semibold text-white transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60"
+              className="w-full rounded-lg bg-rose-700 px-6 py-3 font-semibold text-white transition hover:bg-rose-800 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {loading ? "Creating Event..." : "Create Event"}
             </button>
-
           </form>
         </div>
       </div>

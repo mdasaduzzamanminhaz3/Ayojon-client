@@ -15,7 +15,11 @@ const ManageEventCard = ({ event }: ManageEventCardProps) => {
       {/* Event Image - Added `relative h-48 w-full` */}
       <div className="relative h-48 w-full">
         <Image
-          src={event.image && event.image.trim() !== "" ? event.image : "/placeholder.png"}
+          src={
+            event.image && event.image.trim() !== ""
+              ? event.image
+              : "/placeholder.png"
+          }
           alt={event.title}
           fill
           className="object-cover" // Image overflow/stretch fix korar jonno eta khub dorkari
@@ -25,7 +29,7 @@ const ManageEventCard = ({ event }: ManageEventCardProps) => {
       {/* Event Information */}
       <div className="space-y-3 p-5">
         <div className="flex items-center justify-between">
-          <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-700">
+          <span className="rounded-full bg-rose-100 px-3 py-1 text-xs font-medium text-rose-700">
             {event.category}
           </span>
 
@@ -62,7 +66,7 @@ const ManageEventCard = ({ event }: ManageEventCardProps) => {
         <div className="flex gap-3 border-t border-border pt-4">
           <EditEventModal event={event} />
 
-       <DeleteEventButton eventId={event._id || event.id} />
+          <DeleteEventButton eventId={event._id || event.id} />
         </div>
       </div>
     </div>

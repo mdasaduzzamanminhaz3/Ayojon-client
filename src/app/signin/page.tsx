@@ -17,17 +17,18 @@ import {
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  
-  const handleGoogleSignIn = async() => {
+
+  const handleGoogleSignIn = async () => {
     const data = await authClient.signIn.social({
-    provider: "google",
-  });
+      provider: "google",
+    });
   };
 
   const router = useRouter();
@@ -52,7 +53,7 @@ export default function LoginPage() {
 
       if (error) {
         setErrorMessage(
-          error.message || "Invalid email or password. Please try again."
+          error.message || "Invalid email or password. Please try again.",
         );
         return;
       }
@@ -70,41 +71,48 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-[85vh] items-center justify-center bg-[#f8faf8] px-5 py-12 dark:bg-[#101b16]">
+    <main className="flex min-h-[85vh] items-center justify-center bg-[#f8faf8] px-5 py-12 dark:bg-[#101B16]">
       <div className="grid w-full max-w-5xl overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-900 md:grid-cols-2">
-
         {/* Left Side */}
-        <div className="relative hidden flex-col justify-between overflow-hidden bg-emerald-800 p-10 text-white md:flex">
-          <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-emerald-500/30 blur-3xl" />
-          <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-emerald-950/50 blur-3xl" />
+        <div className="relative hidden flex-col justify-between overflow-hidden bg-rose-800 p-10 text-white md:flex">
+          <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-rose-500/30 blur-3xl" />
+          <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-rose-950/50 blur-3xl" />
 
           <div className="relative">
             <Link href="/" className="inline-flex items-center gap-2">
-              <CalendarDays size={28} />
-              <span className="text-2xl font-extrabold">Ayojon</span>
+              <div className="relative h-11 w-11 overflow-hidden rounded-xl border-2 border-primary/20 bg-background shadow-xs transition-transform duration-300 group-hover:scale-105">
+                <Image
+                  className="h-full w-full object-cover object-center"
+                  src="/images/ayojon-logo.png"
+                  height={44}
+                  width={44}
+                  alt="Ayojon Logo"
+                  priority
+                />
+              </div>
+              <span className="text-2xl font-extrabold tracking-tight text-white">
+                Ayo<span className="text-rose-400">jon</span>
+              </span>
             </Link>
           </div>
 
           <div className="relative">
-            <div className="mb-7 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10">
-              <HeartHandshake size={38} />
-            </div>
 
             <h2 className="text-4xl font-extrabold leading-tight">
               Every Event
               <br />
               Starts With
               <br />
-              <span className="text-emerald-300">A Connection.</span>
+              <span className="text-rose-300">A Connection.</span>
             </h2>
 
-            <p className="mt-5 max-w-sm leading-7 text-emerald-100">
-              Sign in to discover exciting events, connect with people,
-              and create unforgettable memories.
+            <p className="mt-5 max-w-sm leading-7 text-rose-100">
+              Sign in to discover exciting events, connect with people, and
+              create unforgettable memories.
             </p>
           </div>
 
-          <p className="relative text-sm text-emerald-200">
+          <p className="relative text-sm text-rose-200">
             © {new Date().getFullYear()} Ayojon. All rights reserved.
           </p>
         </div>
@@ -112,18 +120,28 @@ export default function LoginPage() {
         {/* Right Side */}
         <div className="flex items-center justify-center p-6 sm:p-10 lg:p-12">
           <div className="w-full max-w-md">
-
             {/* Mobile Logo */}
             <Link
               href="/"
-              className="mb-10 inline-flex items-center gap-2 text-emerald-700 dark:text-emerald-400 md:hidden"
+              className="mb-10 inline-flex items-center gap-2 text-rose-700 dark:text-rose-400 md:hidden"
             >
-              <CalendarDays size={27} />
-              <span className="text-2xl font-extrabold">Ayojon</span>
+            <div className="relative h-11 w-11 overflow-hidden rounded-xl border-2 border-primary/20 bg-background shadow-xs transition-transform duration-300 group-hover:scale-105">
+                <Image
+                  className="h-full w-full object-cover object-center"
+                  src="/images/ayojon-logo.png"
+                  height={44}
+                  width={44}
+                  alt="Ayojon Logo"
+                  priority
+                />
+              </div>
+              <span className="text-2xl font-extrabold tracking-tight text-white">
+                Ayo<span className="text-rose-400">jon</span>
+              </span>
             </Link>
 
             <div className="mb-8">
-              <p className="text-sm font-bold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
+              <p className="text-sm font-bold uppercase tracking-widest text-rose-700 dark:text-rose-400">
                 Welcome Back
               </p>
 
@@ -132,13 +150,11 @@ export default function LoginPage() {
               </h1>
 
               <p className="mt-3 text-sm leading-6 text-gray-500 dark:text-gray-400">
-                Welcome back! Please enter your details to access
-                your account.
+                Welcome back! Please enter your details to access your account.
               </p>
             </div>
 
             <form className="space-y-5" onSubmit={handleSubmit}>
-
               {/* Email */}
               <div>
                 <label
@@ -148,7 +164,7 @@ export default function LoginPage() {
                   Email Address
                 </label>
 
-                <div className="flex h-12 items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 transition focus-within:border-emerald-600 focus-within:ring-2 focus-within:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-800">
+                <div className="flex h-12 items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 transition focus-within:border-rose-600 focus-within:ring-2 focus-within:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-800">
                   <Mail size={18} className="text-gray-400" />
 
                   <input
@@ -175,13 +191,13 @@ export default function LoginPage() {
 
                   <Link
                     href="/forgot-password"
-                    className="text-xs font-semibold text-emerald-700 hover:underline dark:text-emerald-400"
+                    className="text-xs font-semibold text-rose-700 hover:underline dark:text-rose-400"
                   >
                     Forgot Password?
                   </Link>
                 </div>
 
-                <div className="flex h-12 items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 transition focus-within:border-emerald-600 focus-within:ring-2 focus-within:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-800">
+                <div className="flex h-12 items-center gap-3 rounded-xl border border-gray-200 bg-gray-50 px-4 transition focus-within:border-rose-600 focus-within:ring-2 focus-within:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-800">
                   <Lock size={18} className="text-gray-400" />
 
                   <input
@@ -197,34 +213,16 @@ export default function LoginPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                    className="text-gray-400 transition hover:text-emerald-700 dark:hover:text-emerald-400"
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
+                    className="text-gray-400 transition hover:text-rose-700 dark:hover:text-rose-400"
                   >
-                    {showPassword ? (
-                      <EyeOff size={18} />
-                    ) : (
-                      <Eye size={18} />
-                    )}
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
                 </div>
               </div>
 
-              {/* Remember Me */}
-              <div className="flex items-center gap-2">
-                <input
-                  id="remember"
-                  name="remember"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 accent-emerald-700"
-                />
-
-                <label
-                  htmlFor="remember"
-                  className="text-sm text-gray-600 dark:text-gray-400"
-                >
-                  Remember me
-                </label>
-              </div>
 
               {/* Error Message */}
               {errorMessage && (
@@ -241,7 +239,7 @@ export default function LoginPage() {
               {successMessage && (
                 <div
                   role="status"
-                  className="flex items-start gap-2 rounded-xl border border-green-200 bg-green-50 p-3 text-sm text-green-700 dark:border-green-900 dark:bg-green-950/30 dark:text-green-400"
+                  className="flex items-start gap-2 rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700 dark:border-rose-900 dark:bg-rose-950/30 dark:text-rose-400"
                 >
                   <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
                   <p>{successMessage}</p>
@@ -252,7 +250,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-emerald-700 font-semibold text-white transition hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-rose-700 font-semibold text-white transition hover:bg-rose-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-rose-600 dark:hover:bg-rose-500"
               >
                 {loading ? "Signing in..." : "Sign In"}
                 {!loading && <ArrowRight size={18} />}
@@ -264,7 +262,7 @@ export default function LoginPage() {
               Don&apos;t have an account?{" "}
               <Link
                 href="/signup"
-                className="font-bold text-emerald-700 hover:underline dark:text-emerald-400"
+                className="font-bold text-rose-700 hover:underline dark:text-rose-400"
               >
                 Create an account
               </Link>
@@ -278,7 +276,6 @@ export default function LoginPage() {
               <FcGoogle />
               Login with Google
             </button>
-
           </div>
         </div>
       </div>

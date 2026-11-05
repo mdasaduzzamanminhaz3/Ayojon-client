@@ -1,10 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  ArrowUpRight,
-  CalendarDays,
-  MapPin,
-} from "lucide-react";
+import { ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
 
 interface IPastEvent {
   _id: string;
@@ -26,13 +22,14 @@ const PastEventCard = ({ event }: PastEventCardProps) => {
       ? event.image
       : "/images/events/events.jpg";
 
-  const formattedDate = new Date(
-    `${event.date}T00:00:00`
-  ).toLocaleDateString("en-US", {
-    month: "long",
-    day: "2-digit",
-    year: "numeric",
-  });
+  const formattedDate = new Date(`${event.date}T00:00:00`).toLocaleDateString(
+    "en-US",
+    {
+      month: "long",
+      day: "2-digit",
+      year: "numeric",
+    },
+  );
 
   return (
     <Link
@@ -54,12 +51,12 @@ const PastEventCard = ({ event }: PastEventCardProps) => {
           {event.category}
         </span>
 
-        <span className="absolute right-4 top-4 rounded-full bg-emerald-500 px-3 py-1.5 text-[11px] font-bold text-white">
+        <span className="absolute right-4 top-4 rounded-full bg-rose-500 px-3 py-1.5 text-[11px] font-bold text-white">
           Completed
         </span>
 
         <div className="absolute bottom-0 left-0 right-0 p-5">
-          <p className="mb-1 text-xs font-medium text-emerald-300">
+          <p className="mb-1 text-xs font-medium text-rose-300">
             Ayojon Memories
           </p>
 
@@ -68,19 +65,19 @@ const PastEventCard = ({ event }: PastEventCardProps) => {
           </h3>
         </div>
 
-        <span className="absolute bottom-5 right-5 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-white text-emerald-700 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        <span className="absolute bottom-5 right-5 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-white text-rose-700 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           <ArrowUpRight size={19} />
         </span>
       </div>
 
       <div className="px-1 pt-4">
         <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-          <CalendarDays size={15} className="text-emerald-600" />
+          <CalendarDays size={15} className="text-rose-600" />
           {formattedDate}
         </div>
 
         <div className="mt-2 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-          <MapPin size={15} className="text-emerald-600" />
+          <MapPin size={15} className="text-rose-600" />
           {event.location}
         </div>
       </div>

@@ -65,7 +65,7 @@ export default function ContactPage() {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData({
       ...formData,
@@ -89,32 +89,29 @@ export default function ContactPage() {
 
   return (
     <MainLayout>
-      <div className="bg-[#f8faf8] dark:bg-[#101813]">
+      <div className="bg-[#f8faf8] dark:bg-[#2a1b1e]">
         {/* Hero Section */}
-        <section className="relative overflow-hidden bg-emerald-950 px-5 py-20 text-white sm:py-24">
-          <div className="absolute -right-20 -top-32 h-80 w-80 rounded-full bg-emerald-600/20 blur-3xl" />
-          <div className="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-green-500/10 blur-3xl" />
+        <section className="relative overflow-hidden bg-rose-950 px-5 py-20 text-white sm:py-24">
+          <div className="absolute -right-20 -top-32 h-80 w-80 rounded-full bg-rose-600/20 blur-3xl" />
+          <div className="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-rose-500/10 blur-3xl" />
 
           <div className="relative mx-auto max-w-7xl text-center">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-white/10 px-4 py-2 text-sm text-emerald-100">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-rose-400/30 bg-white/10 px-4 py-2 text-sm text-rose-100">
               <MessageCircle size={16} />
               We&apos;re Here to Help
             </div>
 
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
               Get in Touch
-              <span className="block text-emerald-400">
-                With Our Team
-              </span>
+              <span className="block text-rose-400">With Our Team</span>
             </h1>
 
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-emerald-100/80 sm:text-lg">
-              Have a question, suggestion, or need assistance?
-              We&apos;d love to hear from you. Let&apos;s make something
-              amazing happen together.
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-rose-100/80 sm:text-lg">
+              Have a question, suggestion, or need assistance? We&apos;d love to
+              hear from you. Let&apos;s make something amazing happen together.
             </p>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-3 text-sm text-emerald-100">
+            <div className="mt-8 flex flex-wrap justify-center gap-3 text-sm text-rose-100">
               <span className="flex items-center gap-2">
                 <Clock size={16} />
                 We&apos;re happy to help
@@ -133,7 +130,7 @@ export default function ContactPage() {
           <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.8fr_1.2fr]">
             {/* Contact Information */}
             <div>
-              <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
+              <p className="text-sm font-semibold uppercase tracking-widest text-rose-700 dark:text-rose-400">
                 Contact Information
               </p>
 
@@ -142,9 +139,8 @@ export default function ContactPage() {
               </h2>
 
               <p className="mt-5 max-w-md leading-7 text-gray-600 dark:text-gray-400">
-                Whether you&apos;re organizing an event or looking
-                for something exciting to attend, we&apos;re here
-                to support you.
+                Whether you&apos;re organizing an event or looking for something
+                exciting to attend, we&apos;re here to support you.
               </p>
 
               <div className="mt-9 space-y-5">
@@ -155,11 +151,15 @@ export default function ContactPage() {
                     <a
                       key={item.title}
                       href={item.href}
-                      target={item.title === "Our Location" ? "_blank" : undefined}
-                      rel={item.title === "Our Location" ? "noreferrer" : undefined}
-                      className="group flex items-start gap-4 rounded-2xl border border-gray-200 bg-white p-5 transition hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg dark:border-gray-800 dark:bg-[#151f18]"
+                      target={
+                        item.title === "Our Location" ? "_blank" : undefined
+                      }
+                      rel={
+                        item.title === "Our Location" ? "noreferrer" : undefined
+                      }
+                      className="group flex items-start gap-4 rounded-2xl border border-gray-200 bg-white p-5 transition hover:-translate-y-1 hover:border-rose-300 hover:shadow-lg dark:border-gray-800 dark:bg-[#151f18]"
                     >
-                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400">
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-400">
                         <Icon size={22} />
                       </div>
 
@@ -170,7 +170,7 @@ export default function ContactPage() {
                         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                           {item.description}
                         </p>
-                        <p className="mt-2 text-sm font-semibold text-emerald-700 group-hover:underline dark:text-emerald-400">
+                        <p className="mt-2 text-sm font-semibold text-rose-700 group-hover:underline dark:text-rose-400">
                           {item.value}
                         </p>
                       </div>
@@ -179,14 +179,14 @@ export default function ContactPage() {
                 })}
               </div>
 
-              <div className="mt-8 rounded-2xl bg-emerald-900 p-6 text-white dark:bg-emerald-950">
+              <div className="mt-8 rounded-2xl bg-rose-900 p-6 text-white dark:bg-rose-950">
                 <div className="flex items-center gap-3">
                   <div className="rounded-xl bg-white/10 p-3">
                     <HeartHandshakeIcon />
                   </div>
                   <div>
                     <h3 className="font-semibold">We&apos;re all ears!</h3>
-                    <p className="mt-1 text-sm text-emerald-100">
+                    <p className="mt-1 text-sm text-rose-100">
                       Your feedback helps us improve Ayojon.
                     </p>
                   </div>
@@ -222,7 +222,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       placeholder="Enter your name"
                       required
-                      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-rose-600 focus:ring-4 focus:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
                     />
                   </div>
 
@@ -241,7 +241,7 @@ export default function ContactPage() {
                       onChange={handleChange}
                       placeholder="Enter your email"
                       required
-                      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-rose-600 focus:ring-4 focus:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
                     />
                   </div>
                 </div>
@@ -261,7 +261,7 @@ export default function ContactPage() {
                     onChange={handleChange}
                     placeholder="What is this about?"
                     required
-                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                    className="w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-rose-600 focus:ring-4 focus:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
                   />
                 </div>
 
@@ -280,13 +280,13 @@ export default function ContactPage() {
                     placeholder="Write your message here..."
                     rows={6}
                     required
-                    className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-600 focus:ring-4 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                    className="w-full resize-none rounded-xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-rose-600 focus:ring-4 focus:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-800 px-6 py-4 text-sm font-semibold text-white transition hover:bg-emerald-900 focus:outline-none focus:ring-4 focus:ring-emerald-600/20 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-rose-800 px-6 py-4 text-sm font-semibold text-white transition hover:bg-rose-900 focus:outline-none focus:ring-4 focus:ring-rose-600/20 dark:bg-rose-600 dark:hover:bg-rose-500"
                 >
                   Send Message
                   <Send
@@ -303,7 +303,7 @@ export default function ContactPage() {
         <section className="border-t border-gray-200 bg-white px-5 py-20 dark:border-gray-800 dark:bg-[#151f18]">
           <div className="mx-auto max-w-4xl">
             <div className="mb-10 text-center">
-              <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
+              <p className="text-sm font-semibold uppercase tracking-widest text-rose-700 dark:text-rose-400">
                 FAQ
               </p>
               <h2 className="mt-3 text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
@@ -318,11 +318,11 @@ export default function ContactPage() {
               {faqs.map((faq) => (
                 <details
                   key={faq.question}
-                  className="group rounded-2xl border border-gray-200 bg-[#f8faf8] p-5 open:border-emerald-300 dark:border-gray-800 dark:bg-gray-900"
+                  className="group rounded-2xl border border-gray-200 bg-[#f8faf8] p-5 open:border-rose-300 dark:border-gray-800 dark:bg-gray-900"
                 >
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-semibold text-gray-900 dark:text-white">
                     {faq.question}
-                    <span className="text-xl text-emerald-700 transition-transform group-open:rotate-45 dark:text-emerald-400">
+                    <span className="text-xl text-rose-700 transition-transform group-open:rotate-45 dark:text-rose-400">
                       +
                     </span>
                   </summary>
@@ -336,7 +336,7 @@ export default function ContactPage() {
             <div className="mt-10 text-center">
               <Link
                 href="/events"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline dark:text-emerald-400"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-rose-700 hover:underline dark:text-rose-400"
               >
                 Explore Events
                 <ArrowRight size={17} />

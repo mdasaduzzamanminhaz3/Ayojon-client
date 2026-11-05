@@ -1,12 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import {
-  CalendarDays,
-  Clock,
-  MapPin,
-  Users,
-  UserRound,
-} from "lucide-react";
+import { CalendarDays, Clock, MapPin, Users, UserRound } from "lucide-react";
 
 import MainLayout from "../../main-layout";
 import JoinEventButton from "../../../components/Event/join-event-button";
@@ -19,13 +13,15 @@ const EventDetailsPage = async ({
   params: Promise<{ id: string }>;
 }) => {
   const { id } = await params;
-  const token = await getTokenFromServer()
+  const token = await getTokenFromServer();
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/event/${id}`,
-    {headers:{
-      authorization: `Bearer ${token}`
-    }}
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
   );
 
   if (response.status === 404) {
@@ -44,7 +40,7 @@ const EventDetailsPage = async ({
 
   const attendeeCount = Array.isArray(event.attendees)
     ? event.attendees.length
-    : event.attendees ?? 0;
+    : (event.attendees ?? 0);
 
   return (
     <MainLayout>
@@ -63,7 +59,7 @@ const EventDetailsPage = async ({
 
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
-            <span className="absolute bottom-5 left-5 rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white">
+            <span className="absolute bottom-5 left-5 rounded-full bg-rose-600 px-4 py-2 text-sm font-semibold text-white">
               {event.category}
             </span>
           </div>
@@ -71,7 +67,7 @@ const EventDetailsPage = async ({
           {/* Event Information */}
           <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_340px]">
             <div>
-              <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-emerald-600">
+              <p className="mb-3 text-sm font-semibold uppercase tracking-wider text-rose-600">
                 Discover the experience
               </p>
 
@@ -81,7 +77,7 @@ const EventDetailsPage = async ({
 
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 <div className="flex items-center gap-3 rounded-xl border border-border p-4">
-                  <CalendarDays className="text-emerald-600" />
+                  <CalendarDays className="text-rose-600" />
                   <div>
                     <p className="text-sm text-muted-foreground">Date</p>
                     <p className="font-medium">{event.date}</p>
@@ -89,7 +85,7 @@ const EventDetailsPage = async ({
                 </div>
 
                 <div className="flex items-center gap-3 rounded-xl border border-border p-4">
-                  <Clock className="text-emerald-600" />
+                  <Clock className="text-rose-600" />
                   <div>
                     <p className="text-sm text-muted-foreground">Time</p>
                     <p className="font-medium">{event.time}</p>
@@ -97,7 +93,7 @@ const EventDetailsPage = async ({
                 </div>
 
                 <div className="flex items-center gap-3 rounded-xl border border-border p-4">
-                  <MapPin className="text-emerald-600" />
+                  <MapPin className="text-rose-600" />
                   <div>
                     <p className="text-sm text-muted-foreground">Location</p>
                     <p className="font-medium">{event.location}</p>
@@ -105,7 +101,7 @@ const EventDetailsPage = async ({
                 </div>
 
                 <div className="flex items-center gap-3 rounded-xl border border-border p-4">
-                  <Users className="text-emerald-600" />
+                  <Users className="text-rose-600" />
                   <div>
                     <p className="text-sm text-muted-foreground">Attendees</p>
                     <p className="font-medium">
@@ -137,16 +133,14 @@ const EventDetailsPage = async ({
               </p>
 
               <div className="my-6 flex items-center gap-3">
-                <UserRound className="text-emerald-600" />
+                <UserRound className="text-rose-600" />
                 <div>
                   <p className="text-xs text-muted-foreground">Organizer</p>
                   <p className="font-medium">{event.organizer}</p>
                 </div>
               </div>
 
-              <JoinEventButton
-                event={event}
-              />
+              <JoinEventButton event={event} />
 
               <p className="mt-4 text-center text-xs text-muted-foreground">
                 {attendeeCount} people have joined this event

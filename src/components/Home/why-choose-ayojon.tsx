@@ -54,12 +54,11 @@ const features = [
 
 export default function WhyChooseAyojon() {
   return (
-    <section className="bg-white py-20 dark:bg-[#101b16]">
+    <section className="bg-white py-20 dark:bg-[#101B16]">
       <div className="mx-auto max-w-7xl px-6">
-
         {/* Section Heading */}
         <div className="mx-auto mb-14 max-w-2xl text-center">
-          <span className="font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+          <span className="font-semibold uppercase tracking-wider text-rose-700 dark:text-rose-400">
             Why Ayojon?
           </span>
 
@@ -68,8 +67,8 @@ export default function WhyChooseAyojon() {
           </h2>
 
           <p className="mt-4 leading-7 text-gray-600 dark:text-gray-400">
-            We make discovering, organizing and joining events easier.
-            Bring your community closer with Ayojon.
+            We make discovering, organizing and joining events easier. Bring
+            your community closer with Ayojon.
           </p>
         </div>
 
@@ -81,10 +80,10 @@ export default function WhyChooseAyojon() {
             return (
               <div
                 key={feature.id}
-                className="group rounded-2xl border border-gray-200 bg-white p-7 transition duration-300 hover:-translate-y-2 hover:border-emerald-300 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 dark:hover:border-emerald-800"
+                className="group rounded-2xl border border-gray-200 bg-white p-7 transition duration-300 hover:-translate-y-2 hover:border-rose-300 hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 dark:hover:border-rose-800"
               >
                 {/* Icon */}
-                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-700 transition duration-300 group-hover:bg-emerald-700 group-hover:text-white dark:bg-emerald-950 dark:text-emerald-400 dark:group-hover:bg-emerald-600 dark:group-hover:text-white">
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-rose-100 text-rose-700 transition duration-300 group-hover:bg-rose-700 group-hover:text-white dark:bg-rose-950 dark:text-rose-400 dark:group-hover:bg-rose-600 dark:group-hover:text-white">
                   <Icon size={27} />
                 </div>
 
@@ -100,7 +99,6 @@ export default function WhyChooseAyojon() {
             );
           })}
         </div>
-
       </div>
     </section>
   );

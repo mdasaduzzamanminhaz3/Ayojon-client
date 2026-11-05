@@ -31,7 +31,7 @@ const categories = [
     name: "Charity",
     description: "Make a positive impact together.",
     icon: HandHeart,
-    color: "bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400",
+    color: "bg-rose-100 text-rose-600 dark:bg-rose-950 dark:text-rose-400",
     slug: "charity",
   },
   {
@@ -47,7 +47,8 @@ const categories = [
     name: "Festival",
     description: "Enjoy culture, music and celebration.",
     icon: Music,
-    color: "bg-purple-100 text-purple-600 dark:bg-purple-950 dark:text-purple-400",
+    color:
+      "bg-purple-100 text-purple-600 dark:bg-purple-950 dark:text-purple-400",
     slug: "festival",
   },
   {
@@ -55,7 +56,8 @@ const categories = [
     name: "Education",
     description: "Learn, share and grow together.",
     icon: GraduationCap,
-    color: "bg-orange-100 text-orange-600 dark:bg-orange-950 dark:text-orange-400",
+    color:
+      "bg-orange-100 text-orange-600 dark:bg-orange-950 dark:text-orange-400",
     slug: "education",
   },
 ];
@@ -64,10 +66,9 @@ export default function EventCategories() {
   return (
     <section className="bg-[#f7faf7] py-20 dark:bg-[#142019]">
       <div className="mx-auto max-w-7xl px-6">
-
         {/* Section Heading */}
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <span className="font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+          <span className="font-semibold uppercase tracking-wider text-rose-700 dark:text-rose-400">
             Explore Categories
           </span>
 
@@ -76,8 +77,8 @@ export default function EventCategories() {
           </h2>
 
           <p className="mt-4 leading-7 text-gray-600 dark:text-gray-400">
-            From personal celebrations to community activities,
-            discover events for every occasion.
+            From personal celebrations to community activities, discover events
+            for every occasion.
           </p>
         </div>
 
@@ -90,7 +91,7 @@ export default function EventCategories() {
               <Link
                 href={`/events?category=${category.slug}`}
                 key={category.id}
-                className="group flex items-start gap-5 rounded-2xl border border-gray-200 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:border-emerald-800"
+                className="group flex items-start gap-5 rounded-2xl border border-gray-200 bg-white p-6 transition duration-300 hover:-translate-y-1 hover:border-rose-300 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:border-rose-800"
               >
                 <div className={`rounded-2xl p-4 ${category.color}`}>
                   <Icon size={28} />
@@ -104,7 +105,7 @@ export default function EventCategories() {
 
                     <ArrowUpRight
                       size={20}
-                      className="text-gray-400 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-emerald-600"
+                      className="text-gray-400 transition group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-rose-600"
                     />
                   </div>
 
@@ -116,7 +117,6 @@ export default function EventCategories() {
             );
           })}
         </div>
-
       </div>
     </section>
   );

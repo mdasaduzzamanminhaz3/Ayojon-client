@@ -1,7 +1,5 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import {
   Carousel,
@@ -13,18 +11,16 @@ import {
 import { IEvent } from "@/types";
 import EventCard from "../Event/eventCard";
 
-
 export default async function UpcomingEvents() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/upcoming`);
   const events = await res.json();
   return (
-    <section className="bg-white py-20 dark:bg-[#101b16]">
+    <section className="bg-white py-20 dark:bg-[#101B16]">
       <div className="mx-auto max-w-7xl px-6">
-
         {/* Section Heading */}
         <div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
           <div>
-            <span className="font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
+            <span className="font-semibold uppercase tracking-wider text-rose-700 dark:text-rose-400">
               Discover Events
             </span>
 
@@ -40,7 +36,7 @@ export default async function UpcomingEvents() {
 
           <Link
             href="/events"
-            className="inline-flex items-center gap-2 font-semibold text-emerald-700 transition hover:gap-3 dark:text-emerald-400"
+            className="inline-flex items-center gap-2 font-semibold text-rose-700 transition hover:gap-3 dark:text-rose-400"
           >
             View All Events
             <ArrowRight size={19} />
@@ -56,22 +52,21 @@ export default async function UpcomingEvents() {
           className="w-full"
         >
           <CarouselContent className="-ml-7">
-            {events.map((event:IEvent) => (
+            {events.map((event: IEvent) => (
               <CarouselItem
                 key={event.id || event._id}
                 className="pl-7 basis-[85%] sm:basis-1/2 lg:basis-1/3"
               >
                 <EventCard event={event} />
-
               </CarouselItem>
             ))}
           </CarouselContent>
 
           {/* Navigation Buttons */}
           <div className="mt-8 flex justify-end gap-3">
-            <CarouselPrevious className="static translate-y-0 border-gray-300 text-gray-700 hover:bg-emerald-700 hover:text-white dark:border-gray-700 dark:text-white" />
+            <CarouselPrevious className="static translate-y-0 border-gray-300 text-gray-700 hover:bg-rose-700 hover:text-white dark:border-gray-700 dark:text-white" />
 
-            <CarouselNext className="static translate-y-0 border-gray-300 text-gray-700 hover:bg-emerald-700 hover:text-white dark:border-gray-700 dark:text-white" />
+            <CarouselNext className="static translate-y-0 border-gray-300 text-gray-700 hover:bg-rose-700 hover:text-white dark:border-gray-700 dark:text-white" />
           </div>
         </Carousel>
       </div>

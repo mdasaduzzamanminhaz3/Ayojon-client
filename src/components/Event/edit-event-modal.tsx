@@ -24,10 +24,10 @@ interface EditEventModalProps {
 const EditEventModal = ({ event, onUpdated }: EditEventModalProps) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const today = new Date().toISOString().split("T")[0];  
+  const today = new Date().toISOString().split("T")[0];
   const router = useRouter();
   const inputClass =
-    "w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-600";
+    "w-full rounded-lg border border-input bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-rose-600";
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,15 +52,18 @@ const EditEventModal = ({ event, onUpdated }: EditEventModalProps) => {
         capacity: Number(formData.get("capacity")),
         image: String(formData.get("image") || "").trim(),
       };
-      const token = await getTokenFromClient()
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/event/${event._id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          authorization:`Bearer ${token}`
+      const token = await getTokenFromClient();
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/event/${event._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedEvent),
         },
-        body: JSON.stringify(updatedEvent),
-      });
+      );
 
       const result = await res.json().catch(() => null);
 
@@ -85,11 +88,11 @@ const EditEventModal = ({ event, onUpdated }: EditEventModalProps) => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger >
+      <DialogTrigger>
         <div
           role="button"
           tabIndex={0}
-          className="group flex flex-1 items-center justify-center gap-2 rounded-lg bg-emerald-700 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-800 dark:bg-emerald-600 dark:hover:bg-emerald-500 cursor-pointer"
+          className="group flex flex-1 items-center justify-center gap-2 rounded-lg bg-rose-700 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-rose-800 dark:bg-rose-600 dark:hover:bg-rose-500 cursor-pointer"
         >
           <Pencil
             size={16}
@@ -162,12 +165,11 @@ const EditEventModal = ({ event, onUpdated }: EditEventModalProps) => {
                 Date
               </label>
 
-
               <input
                 id="edit-date"
                 name="date"
                 type="date"
-                  min={today}
+                min={today}
                 defaultValue={event.date}
                 required
                 className={inputClass}
@@ -253,7 +255,7 @@ const EditEventModal = ({ event, onUpdated }: EditEventModalProps) => {
             <button
               type="submit"
               disabled={loading}
-              className="rounded-lg bg-emerald-700 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-emerald-800 disabled:opacity-60"
+              className="rounded-lg bg-rose-700 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-rose-800 disabled:opacity-60"
             >
               {loading ? "Updating..." : "Save Changes"}
             </button>

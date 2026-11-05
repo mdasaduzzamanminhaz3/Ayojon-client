@@ -28,16 +28,15 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="bg-white px-6 py-12 dark:bg-[#101b16] sm:py-14">
+    <section className="bg-white px-6 py-12 dark:bg-[#101B16] sm:py-14">
       <div className="mx-auto max-w-7xl">
-        <div className="relative overflow-hidden rounded-2xl bg-emerald-800 px-6 py-9 sm:px-10 lg:flex lg:items-center lg:justify-between lg:gap-10">
-
+        <div className="relative overflow-hidden rounded-2xl bg-rose-800 px-6 py-9 sm:px-10 lg:flex lg:items-center lg:justify-between lg:gap-10">
           {/* Decorative Background */}
-          <div className="pointer-events-none absolute -right-12 -top-20 h-52 w-52 rounded-full bg-emerald-500/30 blur-3xl" />
+          <div className="pointer-events-none absolute -right-12 -top-20 h-52 w-52 rounded-full bg-rose-500/30 blur-3xl" />
 
           {/* Text */}
           <div className="relative max-w-lg">
-            <span className="text-xs font-bold uppercase tracking-widest text-emerald-300">
+            <span className="text-xs font-bold uppercase tracking-widest text-rose-300">
               Stay Connected
             </span>
 
@@ -45,7 +44,7 @@ export default function NewsletterSection() {
               Get Event Updates in Your Inbox
             </h2>
 
-            <p className="mt-2 text-sm leading-6 text-emerald-100/80">
+            <p className="mt-2 text-sm leading-6 text-rose-100/80">
               Subscribe to discover exciting events and community updates.
             </p>
           </div>
@@ -57,7 +56,7 @@ export default function NewsletterSection() {
               className="flex flex-col gap-2 rounded-xl bg-white p-2 sm:flex-row"
             >
               <div className="flex min-w-0 flex-1 items-center gap-2 px-3">
-                <Mail size={18} className="shrink-0 text-emerald-700" />
+                <Mail size={18} className="shrink-0 text-rose-700" />
 
                 <input
                   type="email"
@@ -77,7 +76,7 @@ export default function NewsletterSection() {
               <button
                 type="submit"
                 disabled={isSubscribed}
-                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-emerald-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-emerald-900 disabled:opacity-70"
+                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-rose-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-rose-900 disabled:opacity-70"
               >
                 {isSubscribed ? "Subscribed" : "Subscribe"}
                 {isSubscribed ? (
@@ -92,7 +91,7 @@ export default function NewsletterSection() {
               <p
                 role="status"
                 className={`mt-2 text-xs ${
-                  isSubscribed ? "text-emerald-200" : "text-red-200"
+                  isSubscribed ? "text-rose-200" : "text-red-200"
                 }`}
               >
                 {message}

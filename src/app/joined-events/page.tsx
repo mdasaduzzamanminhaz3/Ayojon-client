@@ -7,8 +7,6 @@ import JoinedEventCard from "@/components/Event/joined-event-card";
 import { IJoinedEvent } from "@/types";
 import { getTokenFromServer } from "@/lib/getTokenFromServer";
 
-
-
 const JoinedEvents = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -23,13 +21,15 @@ const JoinedEvents = async () => {
   let joined: IJoinedEvent[] = [];
 
   try {
-    const token = await getTokenFromServer()
+    const token = await getTokenFromServer();
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/joined-events/${(user.email)}`,{
-        headers:{
-          authorization:`Bearer ${token}`
-        }
-      });
+      `${process.env.NEXT_PUBLIC_API_URL}/joined-events/${user.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      },
+    );
 
     if (!res.ok) {
       throw new Error("Failed to fetch joined events");
@@ -46,7 +46,7 @@ const JoinedEvents = async () => {
       <section className="min-h-screen bg-background px-4 py-12">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10">
-            <p className="font-semibold uppercase tracking-wider text-emerald-600">
+            <p className="font-semibold uppercase tracking-wider text-rose-600">
               Your Activities
             </p>
 
@@ -71,7 +71,6 @@ const JoinedEvents = async () => {
                   <JoinedEventCard
                     key={event._id || event.eventId}
                     event={event}
-                   
                   />
                 ))}
               </div>
@@ -88,7 +87,7 @@ const JoinedEvents = async () => {
 
               <Link
                 href={"/events"}
-                className="mt-6 inline-block rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-white hover:bg-emerald-700"
+                className="mt-6 inline-block rounded-lg bg-rose-600 px-6 py-3 font-semibold text-white hover:bg-rose-700"
               >
                 Explore Events
               </Link>

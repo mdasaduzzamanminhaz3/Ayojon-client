@@ -15,6 +15,7 @@ import {
   UserRound,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -26,7 +27,7 @@ export default function SignUpPage() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorMessage(null); // Age kono error thakle seta reset korbe
-    
+
     const formData = new FormData(event.currentTarget);
     const userData = Object.fromEntries(formData.entries());
 
@@ -54,12 +55,13 @@ export default function SignUpPage() {
       }
 
       console.log("Signup Success:", data);
-      
+
       // Success hole manually redirect kore dibe
       router.push("/");
-      
-    } catch (err ) {
-      setErrorMessage((err as Error).message || "An unexpected error occurred.");
+    } catch (err) {
+      setErrorMessage(
+        (err as Error).message || "An unexpected error occurred.",
+      );
       setLoading(false);
     } finally {
       setLoading(false);
@@ -69,47 +71,54 @@ export default function SignUpPage() {
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#f4f8f4] px-4 py-12 dark:bg-[#0d1510]">
       {/* Background Decorations */}
-      <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-emerald-200/40 blur-3xl dark:bg-emerald-900/20" />
-      <div className="pointer-events-none absolute -bottom-40 -right-32 h-96 w-96 rounded-full bg-green-200/40 blur-3xl dark:bg-green-900/20" />
+      <div className="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-rose-200/40 blur-3xl dark:bg-rose-900/20" />
+      <div className="pointer-events-none absolute -bottom-40 -right-32 h-96 w-96 rounded-full bg-rose-200/40 blur-3xl dark:bg-rose-900/20" />
 
       <div className="relative z-10 w-full max-w-6xl">
         {/* Brand */}
-        <Link
-          href="/"
-          className="mb-8 flex items-center justify-center gap-2"
-        >
-          <div className="rounded-xl bg-emerald-800 p-2.5 text-white dark:bg-emerald-600">
-            <CalendarDays size={25} />
-          </div>
-          <span className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Ayojon
-          </span>
+        <Link href="/" className="mb-8 flex items-center justify-center gap-2">
+              <div className="relative h-11 w-11 overflow-hidden rounded-xl border-2 border-primary/20 bg-background shadow-xs transition-transform duration-300 group-hover:scale-105">
+                <Image
+                  className="h-full w-full object-cover object-center"
+                  src="/images/ayojon-logo.png"
+                  height={44}
+                  width={44}
+                  alt="Ayojon Logo"
+                  priority
+                />
+              </div>
+              <span className="text-2xl font-extrabold tracking-tight text-gray-800">
+                Ayo<span className="text-rose-400">jon</span>
+              </span>
         </Link>
 
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           {/* Left Content */}
           <section className="hidden lg:block">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-white/70 px-4 py-2 text-sm font-medium text-emerald-800 dark:border-emerald-900 dark:bg-emerald-950/40 dark:text-emerald-300">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-rose-200 bg-white/70 px-4 py-2 text-sm font-medium text-rose-800 dark:border-rose-900 dark:bg-rose-950/40 dark:text-rose-300">
               <HeartHandshake size={17} />
+              <span className="text-2xl font-extrabold tracking-tight text-gray-800">
+                Ayo<span className="text-rose-400">jon</span>
+              </span>
               Discover. Connect. Celebrate.
             </div>
 
             <h1 className="max-w-xl text-5xl font-bold leading-[1.15] tracking-tight text-gray-900 dark:text-white">
               Make Every
-              <span className="block text-emerald-700 dark:text-emerald-400">
+              <span className="block text-rose-700 dark:text-rose-400">
                 Moment
               </span>
               Memorable.
             </h1>
 
             <p className="mt-6 max-w-md text-base leading-8 text-gray-600 dark:text-gray-400">
-              Create your Ayojon account and become part of a community
-              where people discover events, build connections, and
-              create unforgettable experiences.
+              Create your Ayojon account and become part of a community where
+              people discover events, build connections, and create
+              unforgettable experiences.
             </p>
 
             <div className="mt-10 flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-400">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-400">
                 <CalendarDays size={23} />
               </div>
               <div>
@@ -125,9 +134,9 @@ export default function SignUpPage() {
 
           {/* Signup Card */}
           <section className="w-full">
-            <div className="rounded-3xl border border-gray-200/80 bg-white p-6 shadow-xl shadow-emerald-950/5 sm:p-9 dark:border-gray-800 dark:bg-[#151f18]">
+            <div className="rounded-3xl border border-gray-200/80 bg-white p-6 shadow-xl shadow-rose-950/5 sm:p-9 dark:border-gray-800 dark:bg-[#151f18]">
               <div className="mb-7">
-                <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
+                <p className="mb-2 text-sm font-semibold uppercase tracking-widest text-rose-700 dark:text-rose-400">
                   Get Started
                 </p>
 
@@ -169,7 +178,7 @@ export default function SignUpPage() {
                       placeholder="Enter your full name"
                       autoComplete="name"
                       required
-                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:bg-gray-900"
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-rose-600 focus:bg-white focus:ring-4 focus:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:bg-gray-900"
                     />
                   </div>
                 </div>
@@ -195,7 +204,7 @@ export default function SignUpPage() {
                       placeholder="you@example.com"
                       autoComplete="email"
                       required
-                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:bg-gray-900"
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-rose-600 focus:bg-white focus:ring-4 focus:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:bg-gray-900"
                     />
                   </div>
                 </div>
@@ -222,7 +231,7 @@ export default function SignUpPage() {
                       name="image"
                       type="url"
                       placeholder="https://example.com/profile.jpg"
-                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:bg-gray-900"
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-rose-600 focus:bg-white focus:ring-4 focus:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:bg-gray-900"
                     />
                   </div>
                   <p className="mt-1.5 text-xs text-gray-400">
@@ -252,13 +261,15 @@ export default function SignUpPage() {
                       autoComplete="new-password"
                       minLength={8}
                       required
-                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-12 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:bg-gray-900"
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-12 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-rose-600 focus:bg-white focus:ring-4 focus:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:bg-gray-900"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      aria-label={showPassword ? "Hide password" : "Show password"}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 transition hover:text-emerald-700"
+                      aria-label={
+                        showPassword ? "Hide password" : "Show password"
+                      }
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 transition hover:text-rose-700"
                     >
                       {showPassword ? <EyeOff size={19} /> : <Eye size={19} />}
                     </button>
@@ -287,7 +298,7 @@ export default function SignUpPage() {
                       autoComplete="new-password"
                       minLength={8}
                       required
-                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-12 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-emerald-600 focus:bg-white focus:ring-4 focus:ring-emerald-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:bg-gray-900"
+                      className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-12 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-rose-600 focus:bg-white focus:ring-4 focus:ring-rose-600/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white dark:focus:bg-gray-900"
                     />
                     <button
                       type="button"
@@ -299,7 +310,7 @@ export default function SignUpPage() {
                           ? "Hide confirm password"
                           : "Show confirm password"
                       }
-                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 transition hover:text-emerald-700"
+                      className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 transition hover:text-rose-700"
                     >
                       {showConfirmPassword ? (
                         <EyeOff size={19} />
@@ -317,7 +328,7 @@ export default function SignUpPage() {
                     name="terms"
                     type="checkbox"
                     required
-                    className="mt-1 h-4 w-4 rounded border-gray-300 accent-emerald-700"
+                    className="mt-1 h-4 w-4 rounded border-gray-300 accent-rose-700"
                   />
                   <label
                     htmlFor="terms"
@@ -326,14 +337,14 @@ export default function SignUpPage() {
                     I agree to the{" "}
                     <Link
                       href="/terms"
-                      className="font-semibold text-emerald-700 hover:underline dark:text-emerald-400"
+                      className="font-semibold text-rose-700 hover:underline dark:text-rose-400"
                     >
                       Terms of Service
                     </Link>{" "}
                     and{" "}
                     <Link
                       href="/privacy"
-                      className="font-semibold text-emerald-700 hover:underline dark:text-emerald-400"
+                      className="font-semibold text-rose-700 hover:underline dark:text-rose-400"
                     >
                       Privacy Policy
                     </Link>
@@ -345,7 +356,7 @@ export default function SignUpPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-800 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-emerald-900/10 transition hover:-translate-y-0.5 hover:bg-emerald-900 focus:outline-none focus:ring-4 focus:ring-emerald-600/20 disabled:opacity-50 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                  className="group flex w-full items-center justify-center gap-2 rounded-xl bg-rose-800 px-5 py-3.5 text-sm font-semibold text-white shadow-lg shadow-rose-900/10 transition hover:-translate-y-0.5 hover:bg-rose-900 focus:outline-none focus:ring-4 focus:ring-rose-600/20 disabled:opacity-50 dark:bg-rose-600 dark:hover:bg-rose-500"
                 >
                   {loading ? "Creating account..." : "Create Account"}
                   {!loading && (
@@ -367,7 +378,7 @@ export default function SignUpPage() {
                 Already have an account?{" "}
                 <Link
                   href="/signin"
-                  className="font-semibold text-emerald-700 hover:underline dark:text-emerald-400"
+                  className="font-semibold text-rose-700 hover:underline dark:text-rose-400"
                 >
                   Sign in
                 </Link>

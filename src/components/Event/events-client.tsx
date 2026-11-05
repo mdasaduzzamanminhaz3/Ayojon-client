@@ -67,7 +67,7 @@ export default function EventsClient({
       <section className="mx-auto max-w-7xl px-5 py-16 sm:py-20">
         {/* Heading */}
         <div className="mb-8">
-          <p className="text-sm font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
+          <p className="text-sm font-semibold uppercase tracking-widest text-rose-700 dark:text-rose-400">
             Find Your Interest
           </p>
 
@@ -86,7 +86,7 @@ export default function EventsClient({
             onClick={() => setSelectedCategory("All Events")}
             className={`flex shrink-0 items-center gap-2 rounded-xl border px-5 py-3 text-sm font-medium transition ${
               selectedCategory === "All Events"
-                ? "border-emerald-800 bg-emerald-800 text-white"
+                ? "border-rose-800 bg-rose-800 text-white"
                 : "border-gray-200 bg-white text-gray-600 dark:border-gray-800 dark:bg-[#151f18] dark:text-gray-300"
             }`}
           >
@@ -104,8 +104,8 @@ export default function EventsClient({
                 onClick={() => setSelectedCategory(category.name)}
                 className={`flex shrink-0 items-center gap-2 rounded-xl border px-5 py-3 text-sm font-medium transition ${
                   isActive
-                    ? "border-emerald-800 bg-emerald-800 text-white"
-                    : "border-gray-200 bg-white text-gray-600 hover:border-emerald-400 dark:border-gray-800 dark:bg-[#151f18] dark:text-gray-300"
+                    ? "border-rose-800 bg-rose-800 text-white"
+                    : "border-gray-200 bg-white text-gray-600 hover:border-rose-400 dark:border-gray-800 dark:bg-[#151f18] dark:text-gray-300"
                 }`}
               >
                 <Icon size={17} />
@@ -138,7 +138,7 @@ export default function EventsClient({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search events..."
-              className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm text-gray-900 outline-none focus:border-emerald-600 dark:border-gray-800 dark:bg-[#151f18] dark:text-white"
+              className="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm text-gray-900 outline-none focus:border-rose-600 dark:border-gray-800 dark:bg-[#151f18] dark:text-white"
             />
           </div>
         </div>
@@ -152,7 +152,7 @@ export default function EventsClient({
           </div>
         ) : (
           <div className="rounded-2xl border border-dashed border-gray-300 bg-white px-5 py-16 text-center dark:border-gray-700 dark:bg-[#151f18]">
-            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-400">
               <Search size={28} />
             </div>
 
@@ -169,7 +169,7 @@ export default function EventsClient({
                 setSelectedCategory("All Events");
                 setSearchQuery("");
               }}
-              className="mt-6 rounded-xl bg-emerald-800 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-900"
+              className="mt-6 rounded-xl bg-rose-800 px-5 py-3 text-sm font-semibold text-white hover:bg-rose-900"
             >
               Show All Events
             </button>

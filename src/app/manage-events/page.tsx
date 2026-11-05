@@ -1,4 +1,3 @@
-
 import React from "react";
 import MainLayout from "../main-layout";
 import { auth } from "@/lib/auth";
@@ -22,10 +21,12 @@ const ManageEvents = async () => {
 
   const token = await getTokenFromServer();
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/my-events/${(user.email)}`,
-    {headers:{
-      authorization: `Bearer ${token}`
-    }}
+    `${process.env.NEXT_PUBLIC_API_URL}/my-events/${user.email}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    },
   );
 
   if (!res.ok) {
@@ -37,13 +38,10 @@ const ManageEvents = async () => {
   return (
     <MainLayout>
       <div className="container mx-auto px-4 py-10">
-
         {/* Page Header */}
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold">
-              Manage My Events
-            </h1>
+            <h1 className="text-3xl font-bold">Manage My Events</h1>
             <p className="mt-2 text-sm text-muted-foreground">
               Manage all the events you have created.
             </p>
@@ -51,7 +49,7 @@ const ManageEvents = async () => {
 
           <Link
             href="/create-event"
-            className="rounded-md bg-green-600 px-5 py-2.5 font-medium text-white transition hover:bg-green-700"
+            className="rounded-md bg-rose-600 px-5 py-2.5 font-medium text-white transition hover:bg-rose-700"
           >
             + Create Event
           </Link>
@@ -60,9 +58,7 @@ const ManageEvents = async () => {
         {/* Events */}
         {events.length === 0 ? (
           <div className="rounded-xl border p-10 text-center">
-            <h2 className="text-xl font-semibold">
-              No Events Found
-            </h2>
+            <h2 className="text-xl font-semibold">No Events Found</h2>
 
             <p className="mt-2 text-muted-foreground">
               You have not created any events yet.
@@ -70,7 +66,7 @@ const ManageEvents = async () => {
 
             <Link
               href="/create-event"
-              className="mt-5 inline-block rounded-md bg-green-600 px-5 py-2 text-white"
+              className="mt-5 inline-block rounded-md bg-rose-600 px-5 py-2 text-white"
             >
               Create Your First Event
             </Link>
@@ -78,14 +74,10 @@ const ManageEvents = async () => {
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((event) => (
-              <ManageEventCard
-                key={event._id}
-                event={event}
-              />
+              <ManageEventCard key={event._id} event={event} />
             ))}
           </div>
         )}
-
       </div>
     </MainLayout>
   );
